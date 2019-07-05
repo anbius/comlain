@@ -13,7 +13,7 @@ use think\Db;
 
 /**
  * Class Register
- * banner¹ÜÀí
+ * ×¢²áµÇÂ½
  */
 class Register extends Controller
 {
