@@ -1,0 +1,80 @@
+{extend name='admin@main'}
+
+{block name="button"}
+
+<!--{if auth("basic/gallery_cate/add")}-->
+<button data-modal='{:url("add")}' data-title="添加分类" class='layui-btn layui-btn-sm layui-btn-primary'>添加分类</button>
+<!--{/if}-->
+
+<!--{if auth("basic/gallery_cate/del")}-->
+<button data-action='{:url("del")}' data-csrf="{:systoken('basic/gallery_cate/del')}" data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除分类</button>
+<!--{/if}-->
+
+{/block}
+
+{block name="content"}
+<!--{empty name='list'}-->
+<blockquote class="layui-elem-quote">没 有 记 录 哦！</blockquote>
+<!--{else}-->
+<input type="hidden" value="resort" name="action">
+<table class="layui-table" lay-skin="line">
+    <thead>
+    <tr>
+        <th class='list-table-check-td think-checkbox'>
+            <input data-auto-none data-check-target='.list-check-box' type='checkbox'>
+        </th>
+        <th class='list-table-sort-td'>
+            <button type="button" data-reload class="layui-btn layui-btn-xs">排 序</button>
+        </th>
+        <th class='text-left nowrap'>标题</th>
+        <th class='text-left nowrap'>描述</th>
+        <th class='text-left nowrap'>添加时间</th>
+        <th class='text-left nowrap'>分类状态</th>
+        <th class='text-left nowrap'>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!--{foreach $list as $key=>$vo}-->
+    <tr data-dbclick>
+        <td class='list-table-check-td think-checkbox'>
+            <input class="list-check-box" value='{$vo.ids}' type='checkbox'>
+        </td>
+        <td class='list-table-sort-td'>
+            <input data-action-blur="{:request()->url()}" data-value="id#{$vo.id};action#sort;sort#{value}" data-loading="false" value="{$vo.sort}" class="list-sort-input">
+        </td>
+        <td class="nowrap"><span class="color-desc">{$vo.spl|raw}</span>{$vo.title|default=''|out}</td>
+        <td>{$vo.digest|default='<span class="color-desc">未设置分类描述</span>'|text_alert_out|raw}</td>
+        <td class='text-left nowrap'>{$vo.create_at|date_time}</td>
+        <td class='text-center nowrap'>{eq name='vo.status' value='0'}<span class="layui-badge">已禁用</span>{else}<span class="layui-badge layui-bg-green">使用中</span>{/eq}</td>
+        <td class='text-center nowrap notselect'>
+
+            {if auth("basic/gallery_cate/add")}
+            <span class="text-explode">|</span>
+            <!--{if $vo.spt<0}-->
+            <a class="layui-btn layui-btn-xs layui-btn-primary" data-tips-text="添加子分类" data-modal='{:url("add")}?pid={$vo.id}'>添 加</a>
+            <!--{else}-->
+            <a class="layui-btn layui-btn-xs layui-btn-disabled">添 加</a>
+            <!--{/if}-->
+            {/if}
+
+            {if auth("basic/gallery_cate/edit")}
+            <a data-dbclick class="layui-btn layui-btn-xs" data-title="编辑" data-modal='{:url("basic/gallery_cate/edit")}?id={$vo.id}'>编 辑</a>
+            {/if}
+
+            {if $vo.status eq 1 and auth("basic/gallery_cate/forbid")}
+            <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('forbid')}" data-value="id#{$vo.ids};status#0" data-csrf="{:systoken('basic/gallery_cate/forbid')}">禁 用</a>
+            {elseif auth("basic/gallery_cate/resume")}
+            <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('resume')}" data-value="id#{$vo.ids};status#1" data-csrf="{:systoken('basic/gallery_cate/resume')}">启 用</a>
+            {/if}
+
+            {if auth("basic/gallery_cate/del")}
+            <a class="layui-btn layui-btn-danger layui-btn-xs" data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.ids}" data-csrf="{:systoken('basic/gallery_cate/del')}">删 除</a>
+            {/if}
+
+        </td>
+    </tr>
+    <!--{/foreach}-->
+    </tbody>
+</table>
+<!--{/empty}-->
+{/block}

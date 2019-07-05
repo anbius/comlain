@@ -1,0 +1,77 @@
+{extend name='admin@main'}
+
+{block name="button"}
+
+    {if auth("basic/product/add")}
+    <button data-open='{:url("add")}' data-title="添加内容" class='layui-btn layui-btn-sm layui-btn-primary'>添加内容</button>
+    {/if}
+
+    {if auth("basic/product/del")}
+    <button data-action='{:url("del")}' data-rule="id#{key}" data-csrf="{:systoken('basic/product/del')}" data-confirm="确定要删除吗？" class='layui-btn layui-btn-sm layui-btn-primary'>删除内容</button>
+    {/if}
+
+{/block}
+
+{block name="content"}
+<table class="layui-table" lay-skin="line">
+    <caption class="margin-bottom-10 text-left">{include file='product/index_search'}</caption>
+    {notempty name='list'}
+    <thead>
+    <tr>
+        <th class='list-table-check-td think-checkbox'>
+            <input data-auto-none data-check-target='.list-check-box' type='checkbox'>
+        </th>
+        <th class='list-table-sort-td'>
+            <button type="button" data-reload class="layui-btn layui-btn-xs">排 序</button>
+        </th>
+        <th class='text-left nowrap'>标题</th>
+        <th class='text-left nowrap'>图片</th>
+        <th class='text-left nowrap'>分类阅读</th>
+        <th class='text-left nowrap'>状态</th>
+        <th class='text-left nowrap'>添加时间</th>
+        <th class='text-left nowrap'>操作</th>
+    </tr>
+    </thead>
+    {/notempty}
+    <tbody>
+    {foreach $list as $key=>$vo}
+    <tr data-dbclick>
+        <td class='list-table-check-td think-checkbox'><input class="list-check-box" value='{$vo.id}' type='checkbox'></td>
+        <td class='list-table-sort-td'>
+            <input data-action-blur="{:request()->url()}" data-value="id#{$vo.id};action#sort;sort#{value}" data-loading="false" value="{$vo.sort}" class="list-sort-input">
+        </td>
+        <td class='text-left'>{$vo.title|out}</td>
+        <td class='text-left nowrap'><img class="notselect" data-tips-image src="{$vo.local_url|default=''|raw}" style="width:80px;"></td>
+        <td class='text-left nowrap'>
+            主分类：{$vo.cat1|default=''}<br />
+            阅读量：{$vo.reads}
+        </td>
+        <td class='text-left nowrap'>
+            {eq name='vo.status' value='0'}<span class="layui-badge">已禁用</span>{else}<span class="layui-badge layui-bg-green">使用中</span>{/eq}
+        </td>
+        <td class='text-left nowrap'>日期：{$vo.create_at|date_time|str_replace=' ','<br>时间：',###|raw}</td>
+        <td class='text-left nowrap'>
+
+            {if auth("basic/product/edit")}
+            <a data-dbclick class="layui-btn layui-btn-xs" data-title="编辑" data-open='{:url("basic/product/edit")}?id={$vo.id}'>编 辑</a>
+            {/if}
+
+            {if $vo.status eq 1 and auth("basic/product/forbid")}
+            <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0" data-csrf="{:systoken('basic/product/forbid')}">禁 用</a>
+            {elseif auth("basic/product/resume")}
+            <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('resume')}" data-value="id#{$vo.id};status#1" data-csrf="{:systoken('basic/product/resume')}">启 用</a>
+            {/if}
+
+            {if auth("basic/product/del")}
+            <a class="layui-btn layui-btn-danger layui-btn-xs" data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.id}" data-csrf="{:systoken('basic/product/del')}">删 除</a>
+            {/if}
+
+        </td>
+    </tr>
+    {/foreach}
+    </tbody>
+</table>
+
+{empty name='list'}<span class="notdata">没有记录哦</span>{else}{$pagehtml|raw|default=''}{/empty}
+
+{/block}

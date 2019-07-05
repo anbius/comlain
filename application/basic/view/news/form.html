@@ -1,0 +1,126 @@
+{extend name='admin@main'}
+
+{block name="content"}
+<form autocomplete="off" onsubmit="return false;" action="{:request()->url()}" data-auto="true" method="post" class='layui-form layui-card'>
+
+    <div class="layui-card-body padding-left-40">
+
+        <!--{if !empty($cates)}-->
+        <div class="layui-form-item layui-row">
+            <label class="layui-col-xs3 relative">
+                <span class="color-green font-s14">所属分类</span>
+                <select required class="layui-select full-width" name="type">
+                    {foreach $cates as $cate}
+                    <!--{if isset($vo.type) and $cate.id eq $vo.type}-->
+                    <option selected value="{$cate.id}">{$cate.spl|raw}{$cate.title|default=''|out}</option>
+                    <!--{else}-->
+                    <option value="{$cate.id}">{$cate.spl|raw}{$cate.title|default=''|out}</option>
+                    <!--{/if}-->
+                    {/foreach}
+                </select>
+            </label>
+            <label class="layui-col-xs9 relative padding-left-10">
+                <span class="color-green font-s14">标题</span>
+                <input name="title" required class="layui-input" placeholder="请输入标题" value="{$vo.title|default=''|out}" maxlength="253">
+            </label>
+        </div>
+        <!--{/if}-->
+
+        <div class="layui-form-item">
+            <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>图片</h3>
+            <table class="layui-table background-item margin-none" lay-size="sm" lay-skin="nob">
+                <tbody>
+                <tr>
+                    <td class="text-top" style="width:100px;padding-bottom:0px;">
+                        <input type="hidden" name="local_url" value="{$vo.local_url|default=''}">
+                        <script>$('[name=local_url]').uploadOneImage()</script>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="layui-form-item block relative">
+            <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px"></sup>描述</h3>
+            <textarea class="layui-textarea" name="digest" placeholder="描述为空，则默认抓取文章内容前500个字符。若文章为空，如有必要，请自行手动添加一些描述哦~" maxlength="500">{$vo.digest|default=''|text_alert_out}</textarea>
+        </div>
+
+        <div class="layui-form-item block relative">
+            <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px"></sup>关键字</h3>
+            <input name="keywords" class="layui-input" placeholder="请输入关键字，用于SEO搜索引擎排名，为空表示关键字为标题。每个关键字词组请使用逗号隔开" value="{$vo.keywords|default=''|out}" maxlength="200">
+        </div>
+
+        <div class="layui-form-item block relative">
+            <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px"></sup>外链</h3>
+            <input name="link_url" class="layui-input" placeholder="必须是以http/https开头的URL链接。可以为外部完整链接地址，也可以填写站内链接哦~" value="{$vo.link_url|default=''|http_out}" maxlength="498">
+        </div>
+
+        <div class="layui-form-item layui-row">
+            <label class="layui-col-xs3 relative">
+                <span class="color-green font-s14">是否立即发布</span>
+                <select required class="layui-select full-width" name="status">
+                    <!--{if !empty($vo) && $vo.status eq 1}-->
+                    <option selected value="1">是</option>
+                    <option value="0">否</option>
+                    <!--{elseif !empty($vo) && $vo.status eq 0}-->
+                    <option selected value="0">否</option>
+                    <option value="1">是</option>
+                    <!--{else}-->
+                    <option selected value="1">是</option>
+                    <option value="0">否</option>
+                    <!--{/if}-->
+                </select>
+            </label>
+            <!--{if isset($isHomepage) && $isHomepage eq 1}-->
+            <label class="layui-col-xs3 relative padding-left-10">
+                <span class="color-green font-s14">推荐至首页</span>
+                <select required class="layui-select full-width" name="is_homepage">
+                    <!--{if !empty($vo) && $vo.is_homepage eq 1}-->
+                    <option selected value="1">是</option>
+                    <option value="0">否</option>
+                    <!--{else}-->
+                    <option selected value="0">否</option>
+                    <option value="1">是</option>
+                    <!--{/if}-->
+                </select>
+            </label>
+            <!--{/if}-->
+            <label class="layui-col-xs3 relative padding-left-10">
+                <span class="color-green font-s14">显示时间</span>
+                <input name="create_at" class="layui-input" id="create_at" placeholder="若不选择（为空）则默认为当前系统时间。自定义发布（显示）时间，请手动选择！" value="{$vo.create_at|default=''|date_time}">
+            </label>
+        </div>
+
+        <div class="layui-form-item block">
+            <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px"></sup>内容</h3>
+            <textarea name="detail">{$vo.detail|default=''|html_out}</textarea>
+        </div>
+
+        <div class="layui-form-item text-center">
+            {notempty name='vo.id'}<input type="hidden" name="id" value="{$vo.id}">{/notempty}
+            <button class="layui-btn layui-btn-danger" onclick="window.history.back()" type="button">取消编辑</button>
+            <button class="layui-btn" type="submit">保存配置</button>
+        </div>
+
+    </div>
+
+    <script type="text/javascript" charset="utf-8">
+        window.laydate.render({ elem: '#create_at' , type: 'datetime'});
+        window.form.render();
+        /*! 实例富文本编辑器  */
+        require(['ckeditor'], function () {
+            window.createEditor('[name="detail"]', {height: 500});
+        });
+    </script>
+    <style type="text/css">
+        .background-item {
+            padding: 15px;
+            background: #efefef;
+        }
+
+        .background-item thead tr {
+            background: #e0e0e0
+        }
+    </style>
+</form>
+{/block}

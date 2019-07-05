@@ -1,0 +1,23 @@
+{extend name="mobile@public/main"}
+
+{block name='body'}
+{include file="mobile@public/header"}
+<!--banner-->
+<div class="bannerWrap"><img src="__PUBLIC__/static/lsy/wap/images/smallBann2.jpg" /></div>
+<!--页面主体部分-->
+<div class="mainBox">
+    <div class="contentBox w1200">
+        {notempty name="content"}
+        <h2>{$content.title}</h2>
+        <h3>
+            <span>发表时间：{$content.created}</span>
+            {notempty name="content.reads"}
+            <span>浏览量：{$content.reads}</span>
+            {/notempty}
+        </h3>
+        <div>{$content.detail|raw}</div>
+        {/notempty}
+    </div>
+</div>
+{include file="mobile@public/footer"}
+{/block}

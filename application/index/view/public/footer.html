@@ -1,0 +1,190 @@
+{notempty name="lkImages"}
+<div class="boxLink">
+    <div class="w1260 f-cb">
+        <span>友情链接</span>
+        <div class="linkButton"> 
+            {foreach $lkWords as $lkWordsVal}
+            <a href="{$lkWordsVal.linkUrl}" target="_blank">{$lkWordsVal.title}</a>
+            {/foreach}
+         </div>
+    </div>    
+</div>
+{/notempty}
+{notempty name="lkImages"}
+<div class="boxLink">
+    <div class="w1260 f-cb">
+        <span>友情链接</span>
+        <div class="linkImg">
+            {foreach $lkImages as $lkImagesVal}
+            <a href="{$lkImagesVal.linkUrl}" target="_blank">
+                <img src="{$lkImagesVal.localUrl}" title="{$lkImagesVal.title}" alt="{$lkImagesVal.title}">
+            </a>
+            {/foreach}
+         </div>
+    </div>    
+</div>
+{/notempty}
+<footer class="footer1">
+    <div class="top">
+        <div class="w1260 f-cb">
+            <div class="top-l fl">
+				<div class="wxbox">
+					<img src="__WEBPREFIX__/lsy/web/images/webchat.jpg">
+				</div>
+                <div class="fxbox f-cb" style="padding-bottom:10px">
+                    <span class="fl">分享到：</span>
+                    <div class="bdsharebuttonbox fl">
+                        <ul class="fl">
+                            <li>
+                                <a href="javascript:void(0)" onclick="shareToSinaWB(event)" class="share_sina fl" data-cmd="tsina" title="分享到新浪"></a>
+                            </li>
+                            <li>
+                               <li><a href="javascript:void(0)" onclick="shareToqq(event)" class="share_qq"  title="QQ好友"></a></li>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" onclick="shareToQzone(event)" class="share_qzone" data-cmd="sqq" title="QQ空间">
+                             </a>
+                            </li>
+<!--                                <li>
+                                <a title="微信朋友圈" class="share_wx" href="javascript:void(0)">
+                                    <div class="wechat-share">
+                                        <h4>打开微信“扫一扫”</h4>
+                                        <div class="qrcode" id="qrcode" style="width: 110px; height: 110px; margin-left:45px ; margin-bottom: 15px;">                          
+                                        </div>
+                                        <div class="help">
+                                            <p>打开网页后点击屏幕右上角分享</p>
+                                            <p>便可将本文分享给朋友或朋友圈</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>  -->
+                        </ul>
+                    </div>
+                </div>
+			</div>
+            <div class="dlbox fr">
+                <div class="ftdl">
+                    <div class="ftdt">关于我们</div>                       
+                    <a class="ftdd c_a1" href="__WEB__/about.html">关于我们</a>                                                
+				</div>
+                <div class="ftdl">
+                	<div class="ftdt">产品展示</div>
+                    {notempty name="productCate"}
+                        {foreach $productCate as $productCateVal} 
+                        {eq name="$productCateVal.pid" value="0"}      
+                            <a class="ftdd" href="__WEB__/product.html?catOne={$productCateVal.id}">{$productCateVal.title}</a>
+                         {/eq}           
+                        {/foreach}
+                    {/notempty}       
+                 </div>
+                <div class="ftdl" style="margin-left:90px; ">
+                    <div class="ftdt">新闻资讯</div>                                    
+                    {notempty name="newsCate"}
+                        {foreach $newsCate as $newsCateVal}                                   
+                            <a class="ftdd" href="__WEB__/news.html?catOne={$newsCateVal.id}">{$newsCateVal.title}</a>                            
+                        {/foreach}
+                    {/notempty}                                   
+                 </div>
+
+                 <div class="ftdl">
+                 	<div class="ftdt">企业相册</div>
+                    {notempty name="galleryCate"}
+                        {foreach $galleryCate as $galleryCateVal}                                   
+                            <a class="ftdd" href="__WEB__/gallery.html?catOne={$galleryCateVal.id}">{$galleryCateVal.title}</a>                         
+                        {/foreach}
+                    {/notempty}                
+                 </div>
+                 <div class="ftdlLx">
+                 	<div class="ftdt">联系我们</div> 
+                    <a class="ftdd">联系人：赵先生</a>
+                    <a class="ftdd">手机：18100945969</a>
+                    <a class="ftdd">电话：0931-2233257</a>
+                    <a class="ftdd">地址：甘肃省兰州市七里河区兰州中心SOHO</a>                                                   
+                 </div>
+			</div>
+		</div>
+	</div>
+	<div class="bot">
+        <div class="w1260">
+            <p>&copy; 2019 某某农业科技公司 ICP All Rights Reserved.</p>
+        </div>
+	</div>
+</footer>
+<footer class="footer2">
+    <div class="bot">
+        <div class="w1260 por f-cb">
+            <p>&copy; 2019 某某农业科技公司 ICP All Rights Reserved.&nbsp;&nbsp;
+            </p>
+        </div>
+    </div>
+</footer>
+<div class="backtop">
+    <a href="###" title="">
+        <img src="__WEBPREFIX__/lsy/web/images/s_6.png">
+    </a>
+</div>
+<div class="f-back">
+    <a href="###" class="sidetop">
+    </a>
+</div>
+<script src="__WEBPREFIX__/lsy/web/js/qrcode.js"></script>
+<script src="__WEBPREFIX__/lsy/web/js/share.js" type="text/javascript"></script> 
+<!-- <script>
+    window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script> -->
+<script  type="text/javascript">
+    $(function(){
+        if ($(window).width()>1200) {
+            $(window).scroll(function() {
+                if($(window).scrollTop() > 800){
+                     $(".backtop").fadeIn(500);          
+                }else{
+                    $(".backtop").fadeOut(500);     
+                }
+            })
+        }else{
+            $(window).scroll(function() {
+                if($(window).scrollTop() > 500){
+                     $(".f-back").fadeIn(500);          
+                }else{
+                    $(".f-back").fadeOut(500);     
+                }
+            })
+        }
+        $(".backtop").click(function(){
+            $("html,body").animate({"scrollTop": "0px"}, "slow");
+        });
+        $(".f-back").click(function(){
+            $("html,body").animate({"scrollTop": "0px"}, "slow");
+        });
+    })
+</script>
+<script  type="text/javascript">
+$(function(){
+    $(".flexslider").flexslider({
+        animation: "slide",
+        slideDirection: "horizontal",
+        slideshow: true,
+        animationDuration: 600,
+        slideshowSpeed: 4000, //展示时间间隔ms
+        touch: true, //是否支持触屏滑动
+    });
+    $(".flexslider_two").flexslider({
+        animation: "slide",
+        slideDirection: "horizontal",
+        slideshow: true,
+        animationDuration: 600,
+        slideshowSpeed: 4000, //展示时间间隔ms
+        touch: true, //是否支持触屏滑动
+    });
+
+    //手机
+    var swiper = new Swiper('.swiper-bot', {
+        pagination: '.swiper-pagination',
+        slidesPerView: 1,
+        paginationClickable: true,
+        spaceBetween: 10
+    });
+})
+</script>
+

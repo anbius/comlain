@@ -1,0 +1,57 @@
+{extend name="index@public/main"}
+{block name='body'}
+{include file="index@public/header"}
+<!-- ny-banner --> 
+<div class="page_bg" style="background: url(__WEBPREFIX__/lsy/web/picture/1525501422.jpg) center top no-repeat;"></div>
+<!-- main -->
+<div class="container">
+    <div class="row">
+    <!-- right -->
+        <div class="col-xs-12 col-sm-8 col-md-9" style="float:right">
+            <div class="list_box">
+                <h2 class="left_h2">关于我们</h2>
+                <div class="contents">
+                    <p style="text-indent: 2em;">
+                        LsyAdmin系统是采用PHP7+MYSQL5.7+技术进行开发的，架构清晰，代码易于维护。支持伪静态功能，关键字和描述，符合SEO标准。拥有企业网站常用的模块功能(企业简介模块、新闻模块、产品模块、图片模块、在线留言、在线订单、友情链接、网站地图等)，强大灵活的后台管理功能，可为企业打造出专业且具有营销力的标准网站。
+                    </p>
+                    <p>
+                        网站系统功能介绍：<br />
+                        1. 单页模块：可发布企业的各类信息，如企业简介、组织机构、企业荣誉、联系方式等，并可随意增删。 <br />
+                        2. 新闻模块：可发布企业新闻和行业新闻等，支持二级栏目，栏目个数无限制。<br />
+                        3. 产品模块：产品支持二级分类，并可对产品直接下订单询价，且支持邮件通知，更符合企业营销。 <br />
+                        4. 图片模块：以图片相册的方式，可发布成功案例或公司相册等栏目，更直观的展示企业的优越性。<br />
+                        5. 在线留言：让客户的建议留言能及时反馈给企业，且支持邮件通知，让沟通变得更加方便。<br />
+                        6. 产品搜索：可对客户输入的关键字进行产品搜索，增加了网站的灵活性。<br />
+                        7.搜索优化：全站支持伪静态，可自定义keywords、description、url，生成sitemap功能，添加内链和标签等功能。<br/>
+                    </p> 
+                </div>
+            </div>
+        </div>
+    <!-- left -->
+        <div class="col-xs-12 col-sm-4 col-md-3">
+            <div class="left_nav" id="categories">
+                <h2 class="left_h2">栏目导航</h2>    
+                <ul class="left_nav_ul" id="firstpane">
+                    <li><a class="biglink" href="__WEB__/about.html">关于我们</a><span class="menu_head">+</span>
+                            <ul class="left_snav_ul menu_body"></ul></li>
+                    <li><a class="biglink" href="__WEB__/ours.html">联系我们</a><span class="menu_head">+</span>
+                            <ul class="left_snav_ul menu_body"></ul></li>
+                    <li><a class="biglink" href="__WEB__/feedback.html">留言反馈</a><span class="menu_head">+</span>
+                            <ul class="left_snav_ul menu_body"></ul></li>
+                </ul>
+            </div>
+            <div class="index_contact">
+                <h2 class="left_h2" style="margin-bottom:20px;">联系我们</h2>
+                <p>联系人：赵先生(经理)</p>
+                <p>电 话：0931-2233257</p>
+                <p>手 机：18100945969</p>
+                <p>网址：www.longshangyun.com</p>
+                <p>邮 箱：longshangyun@foxmail.com</p>
+                <p>地 址：甘肃省兰州市七里河区兰州中心SOHO</p>
+            </div>
+        </div>
+    </div>
+</div>    
+<!-- content end --> 
+{include file="index@public/footer"}
+{/block}

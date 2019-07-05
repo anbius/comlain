@@ -1,0 +1,203 @@
+{extend name="mobile@public/main"}
+
+{block name='body'}
+{include file="mobile@public/header"}
+<!--banner-->
+<div class="banner">
+    <div class="swiper-wrapper">
+        {notempty name="bannerList"}
+        {foreach $bannerList as $blVal}
+        {empty name="blVal.linkUrl"}
+        {eq name="blVal.detailFlag" value="1"}
+        <div class="swiper-slide"><a title="{$blVal.title}-陇上云" href="__PUBLIC__/photo/banner.html?id={$blVal.id}" target="_blank"><img src="{$blVal.localUrl}" /></a></div>
+        {else /}
+        <div class="swiper-slide"><a title="{$blVal.title}-陇上云" href="javascript:void(0)"><img src="{$blVal.localUrl}" /></a></div>
+        {/eq}
+        {else /}
+        <div class="swiper-slide"><a title="{$blVal.title}-陇上云" href="{$blVal.linkUrl}" target="_blank"><img src="{$blVal.localUrl}" /></a></div>
+        {/empty}
+        {/foreach}
+        {else /}
+        <div class="swiper-slide"><a title="陇上云" href="javascript:void(0)"><img src="__STATIC__/lsy/web/images/banner1.jpg" /></a></div>
+        <div class="swiper-slide"><a title="陇上云" href="javascript:void(0)"><img src="__STATIC__/lsy/web/images/banner.jpg" /></a></div>
+        {/notempty}
+    </div>
+    <div class="swiper-pagination"></div>
+</div>
+<!--页面主体部分-->
+<div class="mainBox">
+    <!--技术服务-->
+    <div class="technicalWrap">
+        <div class="technical w1200 cleafix">
+            <div class="title">
+                <h2 class="wow fadeInUp" style="animation-duration: 500ms">程序软件</h2>
+                <span class="wow fadeInUp" style="animation-duration: 600ms"></span>
+                <p class="wow fadeInUp" style="animation-duration: 700ms">网站程序建设、软件定制开发</p>
+            </div>
+            <ul>
+                <li class="wow fadeInLeft" style="animation-duration: 1100ms">
+                    <a href="javascript:void(0)">
+                        <img src="__STATIC__/lsy/wap/images/img2.jpg" />
+                        <div class="mask">
+                            <div class="bg "></div>
+                            <div class="content">
+                                <div class="item-img-panel" style="height: 72px;">
+                                    <img src="__STATIC__/lsy/wap/images/ico2.png" alt="网站定制开发" class="item-img">
+                                </div>
+                                <h3 class="item-title">网站定制开发</h3>
+                                <p class="item-desc">一站式提供“PC + 手机”端网站建设，既有海量模版任选，亦可个性化定制服务。无论何种选择，都符合SEO优化规则。</p>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="wow fadeInLeft" style="animation-duration: 1000ms">
+                    <a href="javascript:void(0)">
+                        <img src="__STATIC__/lsy/wap/images/img3.jpg" />
+                        <div class="mask">
+                            <div class="bg "></div>
+                            <div class="content">
+                                <div class="item-img-panel" style="height: 72px;">
+                                    <img src="__STATIC__/lsy/wap/images/ico3.png" alt="APP定制开发" class="item-img">
+                                </div>
+                                <h3 class="item-title">APP定制开发</h3>
+                                <p class="item-desc">一站式提供“Ios + Android”双系统软件定制开发，为您提供专业的APP软件开发解决方案。</p>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="wow fadeInLeft" style="animation-duration: 900ms">
+                    <a href="javascript:void(0)">
+                        <img src="__STATIC__/lsy/wap/images/img4.jpg" />
+                        <div class="mask">
+                            <div class="bg "></div>
+                            <div class="content">
+                                <div class="item-img-panel" style="height: 72px;">
+                                    <img src="__STATIC__/lsy/wap/images/ico4.png" alt="小程序定制开发" class="item-img">
+                                </div>
+                                <h3 class="item-title">小程序定制开发</h3>
+                                <p class="item-desc">一站式提供“微信小程序、支付宝小程序、百度小程序、今日头条小程序”等第三方开放平台可接入小程序。即用即走，符合时代应用趋势。</p>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="wow fadeInLeft" style="animation-duration: 800ms">
+                    <a href="javascript:void(0)">
+                        <img src="__STATIC__/lsy/wap/images/img5.jpg" />
+                        <div class="mask">
+                            <div class="bg "></div>
+                            <div class="content">
+                                <div class="item-img-panel" style="height: 72px;">
+                                    <img src="__STATIC__/lsy/wap/images/ico5.png" alt="微信公众号建设" class="item-img">
+                                </div>
+                                <h3 class="item-title">微信公众号建设</h3>
+                                <p class="item-desc">一站式提供“微信公众号”无需登录微信公众平台时的繁琐验证，通过简单配置即可在后台应用里操作公众号相关功能，更灵活、方便。</p>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--化繁为简！一品优选一键定制流程-->
+    <div class="changeWrap">
+        <div class="change w1200">
+            <div class="title wow fadeInUp">
+                <h2 class="wow fadeInUp" style="animation-duration: 500ms">化繁为简！一站式定制流程</h2>
+                <span class="wow fadeInUp" style="animation-duration: 600ms"></span>
+                <p class="wow fadeInUp" style="animation-duration: 700ms">我们想您所想，一站式省心托付，助您在众多的对手中脱颖而出</p>
+            </div>
+            <ul class="cleafix">
+                <li class="wow bounce">
+                    <div class="changeImg cleafix">
+                        <img src="__STATIC__/lsy/wap/images/ico6.png" />
+                    </div>
+                    <p>沟通需求</p>
+                </li>
+                <li class="wow bounce">
+                    <div class="changeImg cleafix">
+                        <img src="__STATIC__/lsy/wap/images/ico7.png" />
+                    </div>
+                    <p>梳理原型</p>
+                </li>
+                <li class="wow bounce">
+                    <div class="changeImg cleafix">
+                        <img src="__STATIC__/lsy/wap/images/ico8.png" />
+                    </div>
+                    <p>UI设计</p>
+                </li>
+                <li class="wow bounce">
+                    <div class="changeImg cleafix">
+                        <img src="__STATIC__/lsy/wap/images/ico9.png" />
+                    </div>
+                    <p>产品开发</p>
+                </li>
+                <li class="wow bounce">
+                    <div class="changeImg cleafix">
+                        <img src="__STATIC__/lsy/wap/images/ico10.png" />
+                    </div>
+                    <p>严苛测试上线</p>
+                </li>
+                <li class="wow bounce">
+                    <div class="changeImg cleafix">
+                        <img src="__STATIC__/lsy/wap/images/ico11.png" />
+                    </div>
+                    <p>申请账号证书</p>
+                </li>
+                <li class="wow bounce">
+                    <div class="changeImg cleafix">
+                        <img src="__STATIC__/lsy/wap/images/ico12.png" />
+                    </div>
+                    <p>上传应用市场</p>
+                </li>
+                <li class="wow bounce">
+                    <div class="changeImg cleafix">
+                        <img src="__STATIC__/lsy/wap/images/ico13.png" />
+                    </div>
+                    <p>安全维护保障</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--新闻-->
+    <div class="newWrap">
+        <div class="newDiv w1200">
+            <div class="title">
+                <h2 class="wow fadeInUp" style="animation-duration: 500ms">我们时刻掌握行业最新资讯</h2>
+                <span class="wow fadeInUp" style="animation-duration: 600ms"></span>
+                <p class="wow fadeInUp" style="animation-duration: 700ms">We have the latest information on the industry </p>
+            </div>
+            <div class="newMain">
+                <ul class="cleafix">
+                    {notempty name="contentHomePageList"}
+                    {foreach $contentHomePageList as $cthpVal}
+                    {empty name="cthpVal.linkUrl"}
+                    <li class="wow fadeInUp">
+                        <div class="newImg">
+                            <a href="__PUBLIC__/baike/details.html?id={$cthpVal.id}" title="{$cthpVal.title}-陇上云" target="_blank">
+                                <img src="{$cthpVal.localUrl}" />
+                            </a>
+                        </div>
+                        <h2><a href="__PUBLIC__/baike/details.html?id={$cthpVal.id}" title="{$cthpVal.title}-陇上云" target="_blank">{$cthpVal.title}</a></h2>
+                        <h3>{$cthpVal.created}</h3>
+                    </li>
+                    {else /}
+                    <li class="wow fadeInUp">
+                        <div class="newImg">
+                            <a href="{$cthpVal.linkUrl}" title="{$cthpVal.title}-陇上云" target="_blank">
+                                <img src="{$cthpVal.localUrl}" />
+                            </a>
+                        </div>
+                        <h2><a href="{$cthpVal.linkUrl}" title="{$cthpVal.title}-陇上云" target="_blank">{$cthpVal.title}</a></h2>
+                        <h3>{$cthpVal.created}</h3>
+                    </li>
+                    {/empty}
+                    {/foreach}
+                    {/notempty}
+                </ul>
+                <div class="btnDiv wow fadeInUp"><a href="__PUBLIC__/baike.html">MORE+</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="mobile@public/footer"}
+{/block}

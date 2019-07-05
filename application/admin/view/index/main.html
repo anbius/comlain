@@ -1,0 +1,97 @@
+{extend name='main'}
+
+{block name='content'}
+<table class="layui-table" lay-even lay-skin="line">
+    <colgroup>
+        <col width="20%">
+        <col width="30%">
+        <col width="20%">
+        <col width="30%">
+    </colgroup>
+    <thead>
+    <tr>
+        <th class="text-left" colspan="2">系统信息</th>
+        <th class="text-left" colspan="2">产品团队</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td style="max-width:200px">应用组件版本</td>
+        <td>{:sysconf('app_version')}</td>
+        <td style="max-width:200px">程序名称</td>
+        <td>{:sysconf('app_name')}</td>
+    </tr>
+    <tr>
+        <td>ThinkPHP版本</td>
+        <td>{$think_ver}</td>
+        <td>产品名称</td>
+        <td class="nowrap">LsyTPAdmin管理框架</td>
+    </tr>
+    <tr>
+        <td>服务器操作系统</td>
+        <td>{:php_uname('s')}</td>
+        <td class="nowrap">技术团队</td>
+        <td class="nowrap" id="technologyTeam"></td>
+    </tr>
+    <tr>
+        <td>WEB运行环境</td>
+        <td>{:php_sapi_name()}</td>
+        <td class="nowrap">联系邮箱</td>
+        <td class="nowrap" id="lsyEmail"></td>
+    </tr>
+    <tr>
+        <td>MySQL数据库版本</td>
+        <td>{$mysql_ver}</td>
+        <td class="nowrap">售后电话</td>
+        <td class="nowrap" id="telAfterPreSale"></td>
+    </tr>
+    <tr>
+        <td>运行PHP版本</td>
+        <td>{$Think.PHP_VERSION}</td>
+        <td class="nowrap">投诉反馈</td>
+        <td class="nowrap" id="telComplaint"></td>
+    </tr>
+    <tr>
+        <td>上传大小限制</td>
+        <td>{:ini_get('upload_max_filesize')}</td>
+        <td class="nowrap">团队官网</td>
+        <td class="nowrap" id="website"></td>
+    </tr>
+    <tr>
+        <td>POST大小限制</td>
+        <td>{:ini_get('post_max_size')}</td>
+        <td class="nowrap">公司地址</td>
+        <td class="nowrap" id="address"></td>
+    </tr>
+    </tbody>
+</table>
+{/block}
+{block name="script"}
+<script type="text/javascript" charset="UTF-8">
+    $.ajax({
+        type: 'GET',
+        dataType: 'jsonp',
+        jsonpCallback: 'showLsyInfo',
+        url: 'https://www.longshangyun.com/lsyInfo.json',
+        statusCode: {
+            404: function () {
+                console.log('E404 - 服务器繁忙，请稍候再试');
+            },
+            500: function () {
+                console.log('E500 - 服务器繁忙，请稍候再试');
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            console.log( 'E' + textStatus + ' - 服务器繁忙，请稍候再试');
+        },
+        success: function (res) {
+            $('#technologyTeam').text(res.team.technology);
+            $('#lsyEmail').text(res.email.lsyFoxmail);
+            $('#telAfterPreSale').text(res.telephone.afterSale);
+            $('#telComplaint').text(res.telephone.complaint);
+            $('#website').html('<a target="_blank" href="'+res.website+'">'+res.website+'</a>');
+            $('#address').text(res.address);
+        }
+    });
+</script>
+{/block}

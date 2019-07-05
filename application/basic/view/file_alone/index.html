@@ -1,0 +1,33 @@
+{extend name='admin@main'}
+
+{block name="content"}
+<form autocomplete="off" onsubmit="return false;" action="{:request()->url()}" data-auto="true" method="post" class='form-horizontal layui-form padding-top-20'>
+
+    <fieldset>
+        <legend class="layui-bg-cyan">图片</legend>
+        <div class="row">
+            <div class="col-sm-4 padding-right-0">
+                <input style="border-right:none;" name="local_url" data-type="png,jpg,jpeg,gif,bmp" value="" class="layui-input" title="请上传图片获取链接" placeholder="请上传图片获取链接">
+                <script>$('[name=local_url]').uploadOneImage()</script>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="hr-line-dashed"></div>
+
+    <fieldset>
+        <legend class="layui-bg-cyan">视频</legend>
+        <div class="col-sm-8 padding-right-0">
+            <input style="border-right:none" name="goods_video" value="" class="layui-input" title="请上传视频文件获取链接" placeholder="请上传视频文件获取链接">
+        </div>
+        <div class="col-sm-2 padding-left-0">
+            <button data-file="one" data-type="mp4" data-field="video" type="button" class="layui-btn layui-btn-sm" style="height:38px;line-height:38px;width:100%">上传视频文件</button>
+        </div>
+    </fieldset>
+
+    <script type="text/javascript" charset="utf-8">
+        window.form.render();
+    </script>
+
+</form>
+{/block}

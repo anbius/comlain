@@ -1,0 +1,249 @@
+﻿﻿{extend name="index@public/main"}
+{block name='style'}
+    <link rel="stylesheet" href="__WEBPREFIX__/lsy/web/css/flexslider.css" type="text/css">
+{/block}
+{block name='body'}
+{include file="index@public/header"}
+  <!-- banner start -->
+  <div class="i-banner i-banner-a">
+    <div class="flexslider">      
+        <ul class="slides">
+            {notempty name="bannerList"}
+                {foreach $bannerList as $blVal}
+                    {empty name="blVal.linkUrl"}
+                        {eq name="blVal.detailFlag" value="1"}
+                        <li>
+                            <a title="{$blVal.title}" target="_blank" href="__WEB__/photo/banner.html?id={$blVal.id}">
+                                <img src="{$blVal.localUrl}" />
+                            </a>
+                        </li>
+                        {else /}
+                        <li>
+                            <a title="{$blVal.title}" href="javascript:void(0)">
+                                <img src="{$blVal.localUrl}" />
+                            </a>
+                        </li>
+                        {/eq}
+                    {else /}
+                    <li>
+                        <a title="{$blVal.title}" target="_blank" href="{$blVal.linkUrl}">
+                            <img src="{$blVal.localUrl}" />
+                        </a>
+                    </li>
+                    {/empty}
+                {/foreach}
+            {else /}
+            <li>
+                <a href="javascript:void(0)">
+                    <img src="__WEBPREFIX__/lsy/web/picture/banner01.jpg" />
+                </a>
+            </li>
+            <li>
+                <a href="javascript:void(0)">
+                    <img src="__WEBPREFIX__/lsy/web/picture/banner02.jpg" />
+                </a>
+            </li>
+            {/notempty}
+        </ul>
+    </div>
+</div>
+<div class="i-banner i-banner-b">
+    <div class="flexslider_two">      
+        <ul class="slides">
+            {notempty name="bannerList"}
+                {foreach $bannerList as $blVal}
+                    {empty name="blVal.linkUrl"}
+                        {eq name="blVal.detailFlag" value="1"}
+                        <li>
+                            <a title="{$blVal.title}" target="_blank" href="__WEB__/photo/banner.html?id={$blVal.id}">
+                                <img src="{$blVal.localUrl}" />
+                            </a>
+                        </li>
+                        {else /}
+                        <li>
+                            <a title="{$blVal.title}" href="javascript:void(0)">
+                                <img src="{$blVal.localUrl}" />
+                            </a>
+                        </li>
+                        {/eq}
+                    {else /}
+                        <li>
+                            <a title="{$blVal.title}" target="_blank" href="{$blVal.linkUrl}">
+                                <img src="{$blVal.localUrl}" />
+                            </a>
+                        </li>
+                    {/empty}
+                {/foreach}
+            {else /}
+            <li>
+                <a href="javascript:void(0)">
+                    <img src="__WEBPREFIX__/lsy/web/picture/banner01.jpg" />
+                </a>
+            </li>
+            <li>
+                <a href="javascript:void(0)">
+                    <img src="__WEBPREFIX__/lsy/web/picture/banner02.jpg" />
+                </a>
+            </li>
+            {/notempty}
+        </ul>
+    </div>
+</div>
+<!-- banner end -->
+<!-- main star -->
+<div class="container">
+   <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <h2 class="about_h2">公司简介</h2>
+            <p class="about_line"></p>
+            <p class="about_p">COMPANY PROFILE</p>
+             <section>
+                <p class="about_contents">PHPWEB企业建站系统是采用PHP+MYSQL技术进行开发的，架构清晰，代码易于维护。支持伪静态功能，可生成google和百度地图，支持自定义url、关键字和描述，符合SEO标准。拥有企业网站常用的模块功能(企业简介模块、新闻模块、产品模块、下载模块、图片模块、在线留言、在线订单、友情链接、网站地图等)，强大灵活的后台管理功能，可为企业打造出专业且具有营销力的标准网站。。。</p>
+                <a href="__WEB__/about.html" class="about_more">了解更多</a>
+
+            </section>
+        </div>
+   </div>
+</div>
+<div class="index_adv">
+    <div class="container">
+        <div class="row">
+            <div class="slider5">
+                <div class="slide">
+                    <a href="__WEB__/product.html" target="_blank">
+                        <img src="__WEBPREFIX__/lsy/web/picture/1525500333.jpg" class="adv_img" alt="健康未来A" />
+                    </a>
+                </div>
+                <div class="slide">
+                    <a href="__WEB__/product.html" target="_blank">
+                        <img src="__WEBPREFIX__/lsy/web/picture/1525500362.jpg" class="adv_img" alt="健康未来B" />
+                    </a>
+                </div>
+                <div class="slide">
+                       <a href="__WEB__/product.html" target="_blank">
+                        <img src="__WEBPREFIX__/lsy/web/picture/1525500384.jpg" class="adv_img" alt="健康未来C" />
+                    </a>
+                </div>
+                <div class="slide">
+                       <a href="__WEB__/product.html" target="_blank">
+                        <img src="__WEBPREFIX__/lsy/web/picture/1525500405.jpg" class="adv_img" alt="健康未来D" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="case_bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="index_case">
+                    <h2 class="about_h2">种植基地</h2>
+                    <p class="case_line"></p>
+                    <p class="case_p">CUSTOMER CASE</p>
+                    <div class="case_list">
+                         <div class="col-sm-4 col-md-3 col-mm-6 product_img">
+                            <a href="javascript:void(0)">
+                                <img src="__WEBPREFIX__/lsy/web/picture/1525500745.jpg" class="img-circle" alt="温室大棚温室大棚" />
+                            </a>
+                             <p class="product_title">温室大棚温室大棚</p>
+                        </div>
+                         <div class="col-sm-4 col-md-3 col-mm-6 product_img">
+                            <a href="javascript:void(0)">
+                                <img src="__WEBPREFIX__/lsy/web/picture/1525500730.jpg" class="img-circle" alt="收割机收割机" />
+                            </a>
+                            <p class="product_title">收割机收割机</p>
+                        </div>
+                        <div class="col-sm-4 col-md-3 col-mm-6 product_img">
+                            <a href="javascript:void(0)">
+                                <img src="__WEBPREFIX__/lsy/web/picture/1525500714.jpg" class="img-circle" alt="园林景观石" />
+                            </a>
+                            <p class="product_title">园林景观石</p>
+                        </div>
+                        <div class="col-sm-4 col-md-3 col-mm-6 product_img">
+                            <a href="javascript:void(0)">
+                                <img src="__WEBPREFIX__/lsy/web/picture/1525500691.jpg" class="img-circle" alt="农业机械农业机械" />
+                            </a>
+                             <p class="product_title">农业机械农业机械</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="index_product">
+                <h2 class="about_h2">产品展示</h2>
+                <p class="about_line"></p>
+                <p class="about_p">PRODUCT DISPLAY</p>
+                <div class="product_list">
+                    {notempty name="productHomePageList"}
+                        {foreach $productHomePageList as $productHomePageListVal}
+                            <div class="col-sm-4 col-md-3 col-mm-6 product_img">
+                                <a href="__WEB__/product/details.html?id={$productHomePageListVal.id}">
+                                    <img src="{$productHomePageListVal.localUrl}" class="img-thumbnail" alt="{$productHomePageListVal.title}">
+                                </a>
+                                <p class="product_title"><a href="javascript:void(0)">{$productHomePageListVal.title}</a></p>
+                            </div>
+                        {/foreach}
+                    {/notempty}       
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="news_box" style="background-image: url(__WEBPREFIX__/lsy/web/picture/1525501111.jpg); background-size: cover;background-attachment: fixed;background-color: #F1F5F8;background-position:bottom;background-repeat:no-repeat;">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <h2 class="about_h2">新闻中心</h2>
+                <p class="about_p">NEWS CENTER</p>             
+                <ul class="index_news">
+                    {notempty name="newsHomePageList"}
+                        {foreach $newsHomePageList as $newsHomePageListVal}
+                            {empty name="newsHomePageListVal.linkUrl"}     
+                                <li><span><strong>{$newsHomePageListVal.createdDate}</strong><i>{$newsHomePageListVal.createdYear}</i></span>
+                                    <a href="__WEB__/news/details.html?id={$newsHomePageListVal.id}" title="{$newsHomePageListVal.title}">{$newsHomePageListVal.title}</a><br />
+                                    <em>{$newsHomePageListVal.digest}</em>
+                                </li>
+                            {else/}
+                                <li><span><strong>25</strong><i>2010-01</i></span>
+                                    <a href="{$newsHomePageListVal.linkUrl}" title="{$newsHomePageListVal.title}">{$newsHomePageListVal.title}</a><br />
+                                    <em>{$newsHomePageListVal.digest}</em>
+                                </li>
+                            {/empty}
+                        {/foreach}
+                    {/notempty}                                        
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="index@public/footer"}
+{/block}
+{block name='script'}
+     <script type="text/javascript">
+     if($(window).width()<700){
+            var minSlides = 2;
+            var maxSlides =2;
+            var isauto = true;
+        }else{
+            var minSlides = 4;
+            var maxSlides =4;
+            var isauto = false;
+        }
+          $('.slider5').bxSlider({
+            slideWidth: 300,
+            minSlides: minSlides,
+            maxSlides: maxSlides,
+            moveSlides: 4,
+            slideMargin: 10,
+            auto:isauto
+          });
+    </script>
+{/block}
+
+

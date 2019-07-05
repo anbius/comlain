@@ -1,0 +1,27 @@
+{extend name="index@public/main"}
+
+{block name='body'}
+{include file="index@public/header"}
+<!-- ny-banner start -->
+<div class="page_bg" style="background: url(__WEBPREFIX__/lsy/web/picture/1525501422.jpg) center top no-repeat;"></div>
+<!-- ny-banner end --> 
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-md-12">
+            {notempty name="content"}
+            <div class="list_box">
+                <h2 class="left_h2">
+                    {$content.title}                
+                    <span>发表时间：{$content.created}</span>
+                    <span>浏览量：{$content.reads}</span>
+                </h2>
+                <div class="contents">
+                  {$content.detail|raw}
+                </div>
+            </div>
+            {/notempty}
+        </div>
+    </div>
+</div>   
+{include file="index@public/footer"}
+{/block}

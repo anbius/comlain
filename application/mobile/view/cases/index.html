@@ -1,0 +1,42 @@
+{extend name="mobile@public/main"}
+
+{block name='body'}
+{include file="mobile@public/header"}
+<!--banner-->
+<div class="bannerWrap"><img src="__STATIC__/lsy/wap/images/smallBann4.jpg" /></div>
+<!--页面主体部分-->
+<div class="mainBox">
+    <!--分类-->
+    <div class="screen w1200">
+        <ul class="cleafix">
+            <li>
+                <label>全部&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;展示型网站</label>
+            </li>
+        </ul>
+    </div>
+    <!--案例列表-->
+    <div class="caseList w1200 cleafix">
+        <ul>
+            <li>
+                <a href="javascript:void(0)">
+                    <div class="caseImg"><img src="__STATIC__/lsy/wap/images/img0.jpg" /></div>
+                    <h3><span>模版案例正在开发中。。。</span><em>0</em></h3>
+                </a>
+            </li>
+        </ul>
+        <!--分页-->
+        <!--<div class="pageNum">-->
+            <!--<a href="#"><</a>-->
+            <!--<a href="#">1</a>-->
+            <!--<span>···</span>-->
+            <!--<a href="#" class="on">5</a>-->
+            <!--<a href="#">6</a>-->
+            <!--<a href="#">7</a>-->
+            <!--<span>···</span>-->
+            <!--<a href="#">10</a>-->
+            <!--<a href="#">></a>-->
+        <!--</div>-->
+    </div>
+</div>
+{include file="mobile@public/footer"}
+{/block}

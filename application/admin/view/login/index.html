@@ -1,0 +1,93 @@
+{extend name="admin@index/index"}
+
+{block name="body"}
+<div class="login-container full-height" data-supersized="__ROOT__/static/theme/img/login/bg1.jpg,__ROOT__/static/theme/img/login/bg2.jpg">
+    <div class="header notselect layui-hide-xs">
+        <a href="{:url('@')}" class="title">{:sysconf('app_name')} <span class="padding-left-5 font-s10">{:sysconf('app_version')}</span></a>
+        <ul>
+            <li><a href="javascript:void(0)" onclick="lsyHelp()">帮助</a></li>
+            <li><a target="_blank" href="https://pc.qq.com/category/c3.html">推荐使用谷歌浏览器</a></li>
+        </ul>
+    </div>
+    <form data-login-form onsubmit="return false;" method="post" class="layui-anim layui-anim-upbit" autocomplete="off">
+        <h2 class="notselect">系统管理</h2>
+        <ul>
+            <li class="username">
+                <label>
+                    <i class="layui-icon layui-icon-username"></i>
+                    <input class="layui-input" required pattern="^\S{4,}$" name="username" autofocus autocomplete="off" placeholder="请输入账号">
+                </label>
+            </li>
+            <li class="password">
+                <label>
+                    <i class="layui-icon layui-icon-password"></i>
+                    <input class="layui-input" required pattern="^\S{5,}$" name="password" maxlength="32" type="password" autocomplete="off" placeholder="请输入密码">
+                </label>
+            </li>
+            <li class="text-center padding-top-20">
+                <input type="hidden" name="skey" value="{$skey|default=''}">
+                <button type="submit" class="layui-btn layui-disabled full-width" data-form-loaded="立即登入">正在载入</button>
+            </li>
+        </ul>
+    </form>
+    <div class="footer notselect">
+        {:sysconf('site_copy')}
+        {if sysconf('miitbeian')}<span>&nbsp;|&nbsp;</span><a target="_blank" href="http://www.miitbeian.gov.cn">{:sysconf('miitbeian')}</a>{/if}
+    </div>
+</div>
+{/block}
+
+{block name='style'}
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<script>if (location.href.indexOf('#') > -1) location.replace(location.href.split('#')[0])</script>
+<link rel="stylesheet" href="__ROOT__/static/theme/css/login.css">
+{/block}
+
+{block name='script'}
+<script src="__ROOT__/static/plugs/supersized/supersized.3.2.7.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+function lsyHelp(){
+    var htmls = '<table class="layui-table" lay-even lay-skin="line"><colgroup><col width="20%"><col width="30%"><col width="20%"><col width="30%"></colgroup>';
+    htmls += '<tr><td class="nowrap">技术团队</td> <td class="nowrap" id="technologyTeam"></td></tr>';
+    htmls += '<tr><td class="nowrap">联系邮箱</td> <td class="nowrap" id="lsyEmail"></td></tr>';
+    htmls += '<tr><td class="nowrap">售后电话</td> <td class="nowrap" id="telAfterPreSale"></td></tr>';
+    htmls += '<tr><td class="nowrap">投诉反馈</td> <td class="nowrap" id="telComplaint"></td></tr>';
+    htmls += '<tr><td class="nowrap">公司官网</td> <td class="nowrap" id="website"></td></tr>';
+    htmls += '<tr><td class="nowrap">公司地址</td> <td class="nowrap" id="address"></td></tr>';
+    htmls += '</table>';
+
+    layer.open({
+        type: 1,
+        skin: 'layui-layer-rim', //加上边框
+        area: ['450px', '290px'], //宽高
+        content: htmls
+    });
+
+    $.ajax({
+        type: 'GET',
+        dataType: 'jsonp',
+        jsonpCallback: 'showLsyInfo',
+        url: 'https://www.longshangyun.com/lsyInfo.json',
+        statusCode: {
+            404: function () {
+                console.log('E404 - 服务器繁忙，请稍候再试');
+            },
+            500: function () {
+                console.log('E500 - 服务器繁忙，请稍候再试');
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            console.log( 'E' + textStatus + ' - 服务器繁忙，请稍候再试');
+        },
+        success: function (res) {
+            $('#technologyTeam').text(res.team.technology);
+            $('#lsyEmail').text(res.email.lsyFoxmail);
+            $('#telAfterPreSale').text(res.telephone.afterSale);
+            $('#telComplaint').text(res.telephone.complaint);
+            $('#website').html('<a target="_blank" href="'+res.website+'">'+res.website+'</a>');
+            $('#address').text(res.address);
+        }
+    });
+}
+</script>
+{/block}

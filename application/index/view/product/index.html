@@ -1,0 +1,233 @@
+{extend name="index@public/main"}
+{block name='body'}
+{include file="index@public/header"}
+<!-- ny-banner start -->
+<div class="page_bg" style="background: url(__WEBPREFIX__/lsy/web/picture/1525501422.jpg) center top no-repeat;"></div>
+<!-- ny-banner end --> 
+<!-- main -->
+<div class="container">    
+    <div class="row" id="webPage">
+        <!-- left -->
+        <div class="col-xs-12 col-sm-4 col-md-3">
+            <div class="left_nav" id="categories">
+                <h2 class="left_h2">栏目导航</h2>              
+                <ul class="left_nav_ul" id="firstpane">
+                    {notempty name="productSonCate"}
+                    {foreach $productSonCate as $productSonCateVal}
+                    <li>
+                        <a class="biglink" href="javascript:void(0)">{$productSonCateVal.title}</a>
+                        {notempty  name="productSonCateVal.cates"}
+                        <span class="menu_head">+</span>
+                        <ul class="left_snav_ul menu_body">
+                            {foreach $productSonCateVal.cates as $productSonCateValCatesVal}
+                            <li><a href="javascript:void(0)" target="_self">{$productSonCateValCatesVal.title}</a></li>
+                            {/foreach}
+                        </ul>
+                        {/notempty}
+                    </li>
+                    {/foreach}
+                    {/notempty}
+                </ul>
+            </div>
+            <div class="index_contact">
+                <h2 class="left_h2" style="margin-bottom:20px;">联系我们</h2>
+                <p>联系人：赵先生(经理)</p>
+                <p>电 话：0931-2233257</p>
+                <p>手 机：18100945969</p>
+                <p>网址：www.longshangyun.com</p>
+                <p>邮 箱：longshangyun@foxmail.com</p>
+                <p>地 址：甘肃省兰州市七里河区兰州中心SOHO</p>
+            </div>
+        </div>
+        <!-- right -->
+        <div class="col-xs-12 col-sm-8 col-md-9" style="float:right" >
+            <h2 class="left_h2">产品展示</h2>
+            <div class="list_box" id="listPage">              
+                <div class="product_list product_list2">
+                    {notempty name="list"}
+                        {foreach $list as $listVal}
+                            <div class="col-sm-4 col-md-3 col-mm-6 product_img">
+                                <a href="__WEB__/product/details.html?id={$listVal.id}">
+                                <img src="{$listVal.localUrl}"class="img-thumbnail" alt="{$listVal.title}"/>
+                                </a>
+                                <p class="product_title"><a href="javascript:void(0)" title="{$listVal.title}">{$listVal.title}</a></p>
+                            </div>
+                        {/foreach}
+                    {/notempty}        
+                </div>
+            </div>
+            <div class="pageBox">     
+                <div class="page page1" v-show="show">
+                    <div class="pagelist">
+                        <span class="jump" :class="{disabled:pstart}" @click="jumpPage(type,current_page-1)">上一页</span>
+                        <span v-show="current_page>5" class="jump" @click="jumpPage(type,1)">1</span>
+                        <span class="ellipsis" v-show="efont">...</span>
+                        <span class="jump" v-for="num in indexs" :class="{bgprimary:current_page==num}" @click="jumpPage(type,num)">{{num}}</span>
+                        <span class="ellipsis" v-show="ebehind">...</span>
+                        <span v-show="current_page<pages-4" class="jump" @click="jumpPage(type,pages)">{{pages}}</span>
+                        <span :class="{disabled:pend}" class="jump" @click="jumpPage(type,current_page+1)">下一页</span>
+                        <span class="jumppoint">跳转到：</span>
+                        <span class="jumpinp"><input type="number" v-model="changePage" min="1" :max="pages"></span>
+                        <span class="jump gobtn" @click="jumpPage(type,changePage)">GO</span>
+                    </div>
+                </div>
+                <div class="page2 page" v-show="show">
+                    <div class="pagelist">
+                        <span class="jump" :class="{disabled:pstart}" @click="jumpPage(type,current_page-1)">上页</span>
+                        <span :class="{disabled:pend}" class="jump" @click="jumpPage(type,current_page+1)">下页</span>
+                        <span class="jumppoint">{{current_page}}/{{pages}}<b></b></span>
+                        <span class="jumppoint">跳转到</span>
+                        <span class="jumpinp"><input type="number" v-model="changePage" min="1" :max="pages"></span>
+                        <span class="jump gobtn" @click="jumpPage(type,changePage)">GO</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>   
+{include file="index@public/footer"}
+{/block}
+{block name="script"}
+<script type="text/javascript">
+$(function(){
+    var mySwiper = new Swiper('.caidan',{
+        slidesPerView: 'auto',
+        speed:500,
+        paginationClickable: true,
+        freeMode : true,
+        slidesPerView : 'auto'
+    });
+    var $tab_li = $('.caidan a');
+    $tab_li.click(function(){
+        $(this).addClass('selected').siblings().removeClass('selected');
+    });
+    var ww = $(window).width();
+    if(ww>=992){
+        $('.caidan li').removeClass('swiper-wrapper') 
+    }else{
+        $('.caidan li').addClass('swiper-wrapper')
+    }
+})    
+$(document).ready(function() {
+    $("ul.menu_body").each(function () {
+        if ($(this).text().replace(/[\r\n ]/g, "").length <= 0) {
+            $(this).prev().remove();
+        } //去掉span
+    });
+
+    $("#firstpane span.menu_head").click(function () {
+        var spanatt = $(this).next("ul.menu_body").css('display');
+        if (spanatt == "block") {
+            var spantext = "+";
+            $(this).prev().removeClass("left_active");
+        } else {
+            var spantext = "-";
+            $(this).prev().addClass("left_active");
+        }
+        $(this).html(spantext).addClass("current").next("ul.menu_body").slideToggle(300).siblings("ul.menu_body");
+    });
+});
+</script>
+<script type="text/javascript" src="__STATIC__/plugs/vue/dev/dist/vue.min.js"></script>
+<script type="text/javascript">
+var paream = GetQueryString('catOne');
+if(paream == null || paream == undefined || paream == ''){
+    paream = 0;
+}
+var totalPages = "{$pages|default=0}";
+var newlist = new Vue({
+    el: '#webPage',
+    data: {
+        current_page: 1, //当前页
+        pages: totalPages, //总页数
+        changePage: 1, //跳转页
+        nowIndex: 0,
+        type: paream
+    },
+    computed: {
+        show: function() {
+            return this.pages && this.pages != 1
+        },
+        pstart: function() {
+            return this.current_page == 1;
+        },
+        pend: function() {
+            return this.current_page == this.pages;
+        },
+        efont: function() {
+            if (this.pages <= 7) return false;
+            return this.current_page > 5
+        },
+        ebehind: function() {
+            if (this.pages <= 7) return false;
+            var nowAy = this.indexs;
+            return nowAy[nowAy.length - 1] != this.pages;
+        },
+        indexs: function() {
+
+            var left = 1,
+                    right = this.pages,
+                    ar = [];
+            if (this.pages >= 7) {
+                if (this.current_page > 5 && this.current_page < this.pages - 4) {
+                    left = Number(this.current_page) - 3;
+                    right = Number(this.current_page) + 3;
+                } else {
+                    if (this.current_page <= 5) {
+                        left = 1;
+                        right = 7;
+                    } else {
+                        right = this.pages;
+
+                        left = this.pages - 6;
+                    }
+                }
+            }
+            while (left <= right) {
+                ar.push(left);
+                left++;
+            }
+            return ar;
+        }
+    },
+        methods: {
+            jumpPage: function(type,id) {
+                if(type == this.type){
+                    if(id == this.current_page){return false;}
+                    if(id == 0){return false;}
+                    if(id > this.pages){return false;}
+                }
+
+                var _that = this;
+                _that.type = type;
+                _that.current_page = id;
+                $.get('__WEB__/product/lists.html?catOne='+type+'&page='+id,function(res){
+                    if(res && res.code == 200 && res.data.lists){
+                        var cont = res.data.lists.length;
+                        if(cont > 0){
+                            if(_that.current_page == 1 && res.data.pages && res.data.pages != 0){_that.pages = res.data.pages}
+                            var html = '';
+                            var details = "__WEB__/product/details.html";
+                            for( var i = 0 ; i < cont ; i++ ){
+                                html += '<div class="col-sm-4 col-md-3 col-mm-6 product_img">';
+                                html += '<a href="__WEB__/product/details.html?id='+res.data.lists[i].id+'">';
+                                html += '<img src="'+res.data.lists[i].localUrl+'" alt="'+res.data.lists[i].title+'"/>';
+                                html += '</a>';
+                                html += '<p class="product_title"><a href="javascript:void(0)">'+res.data.lists[i].title+'</a></p>';
+                                html += '</div>';
+                            }
+                            $("#listPage").empty().html(html);
+                        }else{
+                            $("#listPage").empty().html('暂无~');
+                            _that.pages = 1;
+                        }
+                    }else{
+                        $("#listPage").empty().html('暂无~');
+                        _that.pages = 1;
+                    }
+                },'json');
+            }
+        }
+    });
+</script>
+{/block}

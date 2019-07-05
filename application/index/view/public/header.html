@@ -1,0 +1,180 @@
+<div class="header-top f-cb"></div>
+    <header class="header1 f-cb">
+        <div class="w1260 por f-cb">
+            <h1 class="logo fl">
+                <a href="#"><img src="__WEBPREFIX__/lsy/web/picture/lgimg01.png" alt="企业通用模版网站" /></a>
+            </h1>
+            <nav class="fr">
+                <ul class="f-cb">
+                    {eq name="navitem"  value="1"}
+                    <li class="liOn"><a href="__WEB__">首 页<span class="sp"></span></a></li>
+                    {else /}
+                    <li><a href="__WEB__">首 页<span class="sp"></span></a></li>
+                    {/eq}
+
+                    {eq name="navitem" value="2"}
+                    <li class="liOn"><a href="__WEB__/about.html">关于我们<span class="sp"></span></a></li>
+                    {else /}
+                    <li><a href="__WEB__/about.html">关于我们<span class="sp"></span></a></li>
+                    {/eq}
+
+                    {eq name="navitem" value="3"}
+                    <li class="liOn"><a href="__WEB__/product.html">产品展示<span class="sp"></span></a>
+                    {else /}
+                    <li><a href="__WEB__/product.html">产品展示<span class="sp"></span></a>
+                    {/eq}                       
+                        {notempty name="productCate"}
+                        <div class='slid-nav'>
+                            {foreach $productCate as $productCateVal}
+                            {eq name="$productCateVal.pid" value="0"}
+                            <p><a class="c_a1" href="__WEB__/product.html?catOne={$productCateVal.id}">{$productCateVal.title}</a></p>
+                            {/eq}
+                            {/foreach}
+                        </div>
+                        {/notempty}
+                    </li>
+
+                    {eq name="navitem" value="4"}
+                    <li class="liOn"><a href="__WEB__/news.html">新闻资讯<span class="sp"></span></a>
+                    {else /}
+                    <li><a href="__WEB__/news.html">新闻资讯<span class="sp"></span></a>
+                    {/eq}
+                        {notempty name="newsCate"}
+                        <div class='slid-nav'>
+                            {foreach $newsCate as $newsCateVal}
+                            <p><a class="c_a1" href="__WEB__/news.html?catOne={$newsCateVal.id}">{$newsCateVal.title}</a></p>
+                            {/foreach}
+                        </div>
+                        {/notempty}
+                    </li>
+
+                    {eq name="navitem" value="5"}
+                    <li class="liOn"><a href="__WEB__/gallery.html">企业相册<span class="sp"></span></a>
+                    {else /}
+                    <li><a href="__WEB__/gallery.html">企业相册<span class="sp"></span></a>
+                    {/eq}
+                        {notempty name="galleryCate"}
+                        <div class='slid-nav'>
+                            {foreach $galleryCate as $galleryCateVal}
+                            <p><a class="c_a1" href="__WEB__/gallery.html?catOne={$galleryCateVal.id}">{$galleryCateVal.title}</a></p>
+                            {/foreach}
+                        </div>
+                        {/notempty}
+                    </li> 
+
+                    {eq name="navitem" value="6"}
+                    <li  class="liOn"><a href="__WEB__/feedback.html">留言反馈<span class="sp"></span></a></li>
+                    {else /}
+                    <li><a href="__WEB__/feedback.html">留言反馈<span class="sp"></span></a></li>
+                    {/eq}
+                    
+                    {eq name="navitem" value="7"}
+                    <li class="liOn"><a href="__WEB__/ours.html">联系我们<span class="sp"></span></a></li>
+                    {else /}
+                     <li><a href="__WEB__/ours.html">联系我们<span class="sp"></span></a></li>
+                    {/eq}              
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <header class="header2">
+        <div class="main-wrap f-cb">
+            <h1 class="fl logo">                   
+                <a href="#"><img src="__WEBPREFIX__/lsy/web/picture/lgimg01.png" alt="企业通用模版网站" /></a>        
+            </h1>
+            <div class="fr nav-btn">
+                <span class="line line1"></span>
+                <span class="line line2"></span>
+                <span class="line line3"></span>
+            </div>
+        </div>
+        <div class="sub-menu">    
+            <ul>
+                <li><span class="tit sub-tit" onclick=location='__WEB__'>首 页</span></li> 
+                <li><span class="tit sub-tit" onclick=location='__WEB__/about.html'>关于我们</span></li>               
+                <li>
+                    <span class="tit sub-tit">产品展示</span>
+                    {notempty name="productCate"}
+                        <div class='sec-list'>
+                            {foreach $productCate as $productCateVal}                       
+                                <p><a class="c_a1" href="__WEB__/product.html?catOne={$productCateVal.id}">{$productCateVal.title}</a></p>
+                            {/foreach}                           
+                        </div> 
+                    {/notempty}        
+                </li>                
+                <li>
+                    <span class="tit sub-tit">新闻资讯</span>
+                    {notempty name="newsCate"}
+                        <div class='sec-list'>
+                            {foreach $newsCate as $newsCateVal}                       
+                                <p><a class="c_a1" href="__WEB__/news.html?catOne={$newsCateVal.id}">{$newsCateVal.title}</a></p>
+                            {/foreach}                           
+                        </div> 
+                    {/notempty}
+                </li>                
+                <li>
+                    <span class="tit sub-tit" onclick=location='__WEB__/gallery.html'>企业相册</span>
+                    {notempty name="galleryCate"}
+                        <div class='sec-list'>
+                        {foreach $galleryCate as $galleryCateVal}                       
+                            <p><a class="c_a1" href="__WEB__/gallery.html?catOne={$galleryCateVal.id}">{$galleryCateVal.title}</a></p>                            
+                        {/foreach}    
+                        </div>
+                    {/notempty}           
+                </li>                
+                <li>
+                    <span class="tit sub-tit" onclick=location='__WEB__/feedback.html'>留言反馈</span>
+<!--                         <div class='sec-list'>                       
+                            <p><a class="c_a1" href="__WAP__/jobs.html">人才理念</a></p>                            
+                            <p><a class="c_a1" href="__WAP__/jobs.html">人才招聘</a></p>
+                        </div>     -->            
+                </li>                
+                <li>
+                    <span class="tit sub-tit" onclick=location='__WEB__/ours.html'>联系我们</span>                
+                </li>               
+            </ul>   
+        </div>
+    </header>
+<script type="text/javascript">
+$(function(){
+    $("header nav ul li").hover(function(){
+        $(this).find(".slid-nav").stop(true,true).slideToggle(400);
+    })
+
+    $(".header2 .nav-btn").on('click', function() {
+        var _this = $(this);
+        if (!$(this).hasClass('hover')) {
+            $(this).addClass('hover');
+            $(this).children('.line1').stop(true,true).transition({rotate: 45}, 300);
+            $(this).children('.line2').stop(true,true).fadeOut(300);
+            $(this).children('.line3').stop(true,true).transition({rotate: -45}, 300,function(){
+                _this.addClass('active');
+            });
+            $(this).parent(".main-wrap").siblings('.sub-menu').stop().fadeIn();
+            $(".header2 .list-cont").addClass('active');
+            $("body,html").stop(true,true).addClass('ovh');
+            $(".search-bg").stop(true,true).fadeIn();
+        }else{
+            $(this).removeClass('hover');
+            $(this).removeClass('active');
+            $(this).children('.line1').stop(true,true).transition({rotate: 0}, 300);
+            $(this).children('.line2').stop(true,true).fadeIn(300);
+            $(this).children('.line3').stop(true,true).transition({rotate: 0}, 300);
+            $(this).parent(".main-wrap").siblings('.sub-menu').stop().fadeOut();
+            $(".header2 .list-cont").removeClass('active');
+            $("body,html").stop(true,true).removeClass('ovh');
+            $(".search-bg").stop(true,true).fadeOut();
+        }
+    });
+    $(".header2 .sub-menu .sub-tit").on('click', function() {
+        if ($(this).siblings('.sec-list').is(':hidden')){
+            $(this).addClass('on');
+            $(this).siblings('.sec-list').stop().slideDown();
+            $(this).parent().siblings('li').children('.sec-list').stop().slideUp().siblings('.tit').removeClass('on');
+        }else{
+            $(this).removeClass('on');
+            $(this).siblings('.sec-list').stop().slideUp();
+        }
+    });
+})
+</script>    

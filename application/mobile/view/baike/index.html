@@ -1,0 +1,152 @@
+{extend name="mobile@public/main"}
+
+{block name='body'}
+{include file="mobile@public/header"}
+<!--banner-->
+<div class="bannerWrap"><img src="__PUBLIC__/static/lsy/wap/images/smallBann2.jpg" /></div>
+<!--页面主体部分-->
+<div class="mainBox">
+    <div class="newBox w1200">
+        <div class="newTab" id="webPage">
+            <div class="tab_menu">
+                <div class="swiper-wrapper">
+                    <a class="swiper-slide selected" @click="jumpPage(0,1)">全部</a>
+                    <a class="swiper-slide" @click="jumpPage(4,1)">建站基础</a>
+                    <a class="swiper-slide" @click="jumpPage(1,1)">互联百科</a>
+                    <a class="swiper-slide" @click="jumpPage(2,1)">资讯信息</a>
+                    <a class="swiper-slide" @click="jumpPage(3,1)">技术知识</a>
+                    <a class="swiper-slide" href="javascript:void(0)">公司动态</a>
+                    <!--<a class="swiper-slide" @click="jumpPage(5,1)">公司动态</a>-->
+                </div>
+            </div>
+            <div class="tab_box">
+                <div class="newList">
+                    <ul class="cleafix" id="listPage">
+                        {notempty name="list"}
+                        {foreach $list as $lsVal}
+                        <li>
+                            {empty name="lsVal.localUrl"}
+                            <div class="newLeft"><a href="javascript:void(0)"><img src="__STATIC__/lsy/wap/images/img0.jpg" /></a></div>
+                            {else /}
+                            <div class="newLeft"><a href="javascript:void(0)"><img src="{$lsVal.localUrl}" /></a></div>
+                            {/empty}
+                            <div class="newTxt">
+                                <h2>
+                                    {empty name="lsVal.linkUrl"}
+                                    <a target="_blank" title="{$lsVal.title}-陇上云" href="__PUBLIC__/baike/details.html?id={$lsVal.id}">{$lsVal.title}</a>
+                                    {else /}
+                                    <a target="_blank" title="{$lsVal.title}-陇上云" href="{$lsVal.linkUrl}">{$lsVal.title}</a>
+                                    {/empty}
+                                </h2>
+                                <h3><em></em>{$lsVal.created}</h3>
+                            </div>
+                        </li>
+                        {/foreach}
+                        {/notempty}
+                    </ul>
+                    <!--分页-->
+                    <div class="page" v-show="show">
+                        <div class="pagelist">
+                            <span class="jump" :class="{disabled:pstart}" @click="jumpPage(type,current_page-1)">上页</span>
+                            <span :class="{disabled:pend}" class="jump" @click="jumpPage(type,current_page+1)">下页</span>
+                            <span class="jumppoint">{{current_page}}/{{pages}}<b></b></span>
+                            <span class="jumppoint">跳转到</span>
+                            <span class="jumpinp"><input type="number" v-model="changePage" min="1" :max="pages"></span>
+                            <span class="jump gobtn" @click="jumpPage(type,changePage)">GO</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="__STATIC__/plugs/vue/dev/dist/vue.min.js"></script>
+<script type="text/javascript">
+    var totalPages = "{$pages|default=0}";
+    var newlist = new Vue({
+        el: '#webPage',
+        data: {
+            current_page: 1, //当前页
+            pages: totalPages, //总页数
+            changePage: 1,//跳转页
+            nowIndex: 0,
+            type: 0
+        },
+        computed:{
+            show:function(){
+                return this.pages && this.pages !=1
+            },
+            pstart: function() {
+                return this.current_page == 1;
+            },
+            pend: function() {
+                return this.current_page == this.pages;
+            },
+            efont: function() {
+                if (this.pages <= 7) return false;
+                return this.current_page > 5
+            },
+            ebehind: function() {
+                if (this.pages <= 7) return false;
+                var nowAy = this.indexs;
+                return nowAy[nowAy.length - 1] != this.pages;
+            },
+            indexs: function() {
+                return true;
+            }
+        },
+        methods: {
+            jumpPage: function(type,id) {
+                if(type == this.type){
+                    if(id == this.current_page){return false;}
+                    if(id == 0){return false;}
+                    if(id > this.pages){return false;}
+                }
+
+                var _that = this;
+                _that.type = type;
+                _that.current_page = id;
+                $.get('__PUBLIC__/baike/lists.html?catOne='+type+'&page='+id,function(res){
+                    if(res && res.code == 200 && res.data.lists){
+                        var cont = res.data.lists.length;
+                        if(cont > 0){
+                            if(_that.current_page == 1 && res.data.pages && res.data.pages != 0){_that.pages = res.data.pages}
+                            var html = '';
+                            var details = "__PUBLIC__/baike/details.html";
+                            for( var i = 0 ; i < cont ; i++ ){
+                                html += '<li>';
+
+                                if(res.data.lists[i].localUrl && res.data.lists[i].localUrl != undefined){
+                                    html += '<div class="newLeft"><a href="javascript:void(0)"><img src="'+res.data.lists[i].localUrl+'" /></a></div>';
+                                }else{
+                                    html += '<div class="newLeft"><a href="javascript:void(0)"><img src="__STATIC__/lsy/wap/images/img0.jpg" /></a></div>';
+                                }
+
+                                html += '<div class="newTxt"><h2>';
+
+                                if(res.data.lists[i].linkUrl && res.data.lists[i].linkUrl != undefined){
+                                    html += '<a target="_blank" title="'+res.data.lists[i].title+'-陇上云" href="'+res.data.lists[i].linkUrl+'">'+res.data.lists[i].title+'</a>';
+                                }else{
+                                    html += '<a target="_blank" title="'+res.data.lists[i].title+'-陇上云" href="'+details+'?id='+res.data.lists[i].id+'">'+res.data.lists[i].title+'</a>';
+                                }
+
+                                html += '</h2><h3><em></em>'+res.data.lists[i].created+'</h3></div></li>';
+                            }
+                            $("#listPage").empty().html(html);
+                        }else{
+                            $("#listPage").empty().html('暂无~');
+                            _that.pages = 1;
+                        }
+                    }else{
+                        $("#listPage").empty().html('暂无~');
+                        _that.pages = 1;
+                    }
+                },'json');
+            }
+        }
+    });
+</script>
+
+{include file="mobile@public/footer"}
+{/block}

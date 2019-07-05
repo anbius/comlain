@@ -1,0 +1,15 @@
+*.idea
+*.svn
+*.git
+*.buildpath
+*.project
+*.settings
+composer.lock
+constant.php
+/public/static/plugs
+/public/static/upload
+/runtime
+/thinkphp
+/route
+/config
+/vendor

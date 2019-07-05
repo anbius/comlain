@@ -1,0 +1,66 @@
+﻿
+@media (max-width: 1200px) {
+  .n-banner figure {background-position: 20% center !important;}
+  .i-banner .flex-control-paging li a {width: 10px;height: 10px;background: #fff;border: none;}
+  .i-banner .flex-control-paging li a:hover, .i-banner .flex-control-paging li a.flex-active {
+    width: 10px;height: 10px;background: #161573;}
+  .i-banner .wz-box {margin-left: -420px;margin-top: -150px;width: 250px !important;height: 95px;}
+}
+@media (max-width: 1024px) {
+  .i-banner .wz-box {margin-left: -350px;margin-top: -100px;}
+}
+@media (max-width: 768px) {
+  .n-banner {height: 310px;}
+  .n-banner figure {background-position: 20% center !important;background-size: auto 310px !important;height: 310px;}
+  .i-banner .flex-control-paging li a {width: 6px;height: 6px;}
+  .i-banner .flex-control-paging li a:hover, .i-banner .flex-control-paging li a.flex-active {
+    width: 6px;height: 6px;}
+  .i-banner .wz-box {margin-left: -300px;margin-top: -75px;}
+}
+@media (max-width: 650px) {
+  .i-banner .wz-box {width: 170px !important;height: 64px;margin-left: -200px;margin-top: -75px;}
+}
+.i-banner-b{display: none;}
+@media (max-width: 576px) {
+  .i-banner-a{display:none;}
+  .i-banner-b{display: block;}
+}
+@media (max-width: 425px) {
+  .i-banner .flex-control-paging li a {
+    width: 6px;height: 6px;}
+  .i-banner .flex-control-paging li a:hover, .i-banner .flex-control-paging li a.flex-active {
+    width: 6px;height: 6px;}
+  .i-banner .wz-box {margin-left: -150px;margin-top: -45px;}
+  .i-banner .flex-control-paging {height: 10px;}
+  .i-banner .flex-control-paging li {margin: 0 3px;}
+}
+@-webkit-keyframes arrow2 {
+  0% {
+    -webkit-transform: translatey(0);
+    transform: translatey(0);
+  }
+  50% {
+    -webkit-transform: translatey(-4px);
+    transform: translatey(-4px);
+  }
+  100% {
+    -webkit-transform: translatey(0);
+    transform: translatey(0);
+  }
+}
+@keyframes arrow2 {
+  0% {
+    -webkit-transform: translatey(0);
+    transform: translatey(0);
+  }
+  50% {
+    -webkit-transform: translatey(-4px);
+    transform: translatey(-4px);
+  }
+  100% {
+    -webkit-transform: translatey(0);
+    transform: translatey(0);
+  }
+}
+
+/*# sourceMappingURL=mobile.css.map */
