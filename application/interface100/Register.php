@@ -26,7 +26,8 @@ class Register extends Controller
      * */
     public function Register()
     {
-        //todo 密码加密 验证 是否重复
+        //todo 密码加密 验证 是否重复  密码MD5一下
+        //普通投诉用户注册 默认字段
         //ip/index/app.html?edition=1.0.0&interface=Banner&api=lists
         $data = $this->request->post();
         $data = [
@@ -34,10 +35,17 @@ class Register extends Controller
             'password'=>'sniper',
             'mobile'=>'15853197991'
         ];
+
         $userName = $data['userName'];
         $password = $data['password'];
         $mobile   = $data['mobile'];
-
+        $where['userName'] = $userName;
+        /*检查唯一性 用户名注册*/
+        $judge = Db::name('register_user')->where($where)->find();
+        if($judge){
+            $result = 4;
+            return  ['message'=>BaseService::$ERR['USER']['HANDLE_SUCCESS'],'data'=>['reigster'=>$result]];
+        }
         $result =  Db::name('register_user')->data($data)->insert();
         echo '<pre>';
         print_r($result);
