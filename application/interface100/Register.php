@@ -26,8 +26,9 @@ class Register extends Controller
      * */
     public function Register()
     {
+        //todo 密码加密 验证 是否重复
         //ip/index/app.html?edition=1.0.0&interface=Banner&api=lists
-        $data = $this->request->get();
+        $data = $this->request->post();
         $data = [
             'userName'=>'sniper',
             'password'=>'sniper',
@@ -37,12 +38,12 @@ class Register extends Controller
         $password = $data['password'];
         $mobile   = $data['mobile'];
 
-       $res =  Db::name('register_user')->data($data)->insert();
+        $result =  Db::name('register_user')->data($data)->insert();
         echo '<pre>';
-        print_r($res);
+        print_r($result);
         die;
 
-        $return = ['message'=>BaseService::$ERR['SYS']['HANDLE_SUCCESS'],'data'=>['banners'=>$result]];
+        $return = ['message'=>BaseService::$ERR['SYS']['HANDLE_SUCCESS'],'data'=>['reigster'=>$result]];
 
         return $return;
     }
@@ -55,22 +56,29 @@ class Register extends Controller
     {
         $data = $this->request->get();
 /**/
+
+        $login['userName'] = $data['userName'];
+      //  $login['password'] = $data['password'];
+        $user = Db::name('register_user')->field('password')->where($login)->find();
      //   $user=Db::name('admin')->where('username','=',$data['username'])->find();
         if($user){
-            if($user['password'] == md5($data['password'])){
+            if($user['password'] == $data['password']){
                 session('username',$user['username']);
                 session('uid',$user['id']);
-                return 3; //信息正确
+                $message = BaseService::$ERR['USER']['LOGIN_SUCCESS'];
+                $result  = 3;
             }else{
-                return 2;//密码错误
+                $message = BaseService::$ERR['USER']['LOGIN_USER_ERR'];
+                $result  = 2;
+               //密码错误
             }
         }else{
-            return 1;//用户不存在
+            $message = BaseService::$ERR['USER']['REGISTER_USER_ERROR'];
+            $result  = 1;
+           //用户不存在
         }
       /**/
-
-        $return = ['message'=>BaseService::$ERR['SYS']['HANDLE_SUCCESS'],'data'=>$result];
-
+        $return = ['message'=>$message,'data'=>$result];
         return $return;
     }
 }
