@@ -26,9 +26,21 @@ class Register extends Controller
      * */
     public function Register()
     {
+        //ip/index/app.html?edition=1.0.0&interface=Banner&api=lists
         $data = $this->request->get();
+        $data = [
+            'userName'=>'sniper',
+            'password'=>'sniper',
+            'mobile'=>'15853197991'
+        ];
+        $userName = $data['userName'];
+        $password = $data['password'];
+        $mobile   = $data['mobile'];
 
-
+       $res =  Db::name('register_user')->data($data)->insert();
+        echo '<pre>';
+        print_r($res);
+        die;
 
         $return = ['message'=>BaseService::$ERR['SYS']['HANDLE_SUCCESS'],'data'=>['banners'=>$result]];
 
