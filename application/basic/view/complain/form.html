@@ -1,0 +1,74 @@
+{extend name='admin@main'}
+
+{block name="content"}
+<form autocomplete="off" onsubmit="return false;" action="{:request()->url()}" data-auto="true" method="post" class='layui-form layui-card'>
+
+    <div class="layui-card-body padding-left-40">
+
+        <!--{if !empty($cates)}-->
+        <div class="layui-form-item layui-row">
+            <label class="layui-col-xs3 relative">
+                <span class="color-green font-s14">所属分类</span>
+                <select required class="layui-select full-width" name="type">
+                    {foreach $cates as $cate}
+                    <!--{if isset($vo.type) and $cate.id eq $vo.type}-->
+                    <option selected value="{$cate.id}">{$cate.spl|raw}{$cate.title|default=''|out}</option>
+                    <!--{else}-->
+                    <option value="{$cate.id}">{$cate.spl|raw}{$cate.title|default=''|out}</option>
+                    <!--{/if}-->
+                    {/foreach}
+                </select>
+            </label>
+            <label class="layui-col-xs9 relative padding-left-10">
+                <span class="color-green font-s14">标题</span>
+                <input name="title" required class="layui-input" placeholder="请输入标题" value="{$vo.title|default=''|out}" maxlength="253">
+            </label>
+        </div>
+        <!--{/if}-->
+
+        <div class="layui-form-item block relative">
+            <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px"></sup>转给单位</h3>
+            <!--<textarea class="layui-textarea" name="complainContent" placeholder="请填写处理意见~" maxlength="500">{$vo.complainContent|default=''|text_alert_out}</textarea>-->
+            <select name="complainBelong" >
+                <option value="0">请选择</option>
+                {foreach $department as $key=>$dpvo}
+                 <option value="{$dpvo.id}">{$dpvo.name|out}</option>
+                {/foreach}
+            </select>
+        </div>
+        <!--todo 只有受理的才能填写处理意见-->
+        <div class="layui-form-item block relative">
+            <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px"></sup>处理意见</h3>
+            <textarea class="layui-textarea" name="complainDealResult" placeholder="请填写处理意见~" maxlength="500">{$vo.complainDealResult|default=''|text_alert_out}</textarea>
+        </div>
+
+
+
+        <div class="layui-form-item text-center">
+            {notempty name='vo.id'}<input type="hidden" name="id" value="{$vo.id}">{/notempty}
+            <button class="layui-btn layui-btn-danger" onclick="window.history.back()" type="button">取消编辑</button>
+            <button class="layui-btn" type="submit">保存配置</button>
+        </div>
+
+    </div>
+
+    <script type="text/javascript" charset="utf-8">
+        window.laydate.render({ elem: '#create_at' , type: 'datetime'});
+        window.form.render();
+        /*! 实例富文本编辑器  */
+        require(['ckeditor'], function () {
+            window.createEditor('[name="detail"]', {height: 500});
+        });
+    </script>
+    <style type="text/css">
+        .background-item {
+            padding: 15px;
+            background: #efefef;
+        }
+
+        .background-item thead tr {
+            background: #e0e0e0
+        }
+    </style>
+</form>
+{/block}

@@ -38,13 +38,34 @@ class ComplainInfo extends Controller
         $res = Db::name('complain')->data($insertData)->insert();
         //todo deal $res
     }
+    /**图片上传
+     * @return string
+     */
+    public function upload(){
+        $file = request()->file('image');
+        // 移动到框架应用根目录/uploads/ 目录下
+        $info = $file->validate(['size'=>15678,'ext'=>'jpg,png,gif'])->move( '../uploads');
+        if($info){
+            // 成功上传后 获取上传信息
+            // 输出 jpg
+            echo $info->getExtension();
+            // 输出 20160820/42a79759f284b767dfcb2a0197904287.jpg
+            echo $info->getSaveName();
+            // 输出 42a79759f284b767dfcb2a0197904287.jpg
+            echo $info->getFilename();
+        }else{
+            // 上传失败获取错误信息
+            echo $file->getError();
+        }
+    }
     /*
      * 获取该部门下的所有投诉内容按照 投诉来源排序
      * */
     public function getAllComplainInfobyId()
     {
         $data = $this->request->get();
-        $where['id'] = $data['id'];
+        $where['id']        = $data['id'];
+        $where['is_delete'] = 0;
         $complainInfo =  Db::name('complain')->field('*')->where($where)->order('sort desc, complainSource desc')->select();
         if(count($complainInfo)){
             foreach($complainInfo as $ckey=>$cval){
@@ -57,6 +78,7 @@ class ComplainInfo extends Controller
         return '';
 
     }
+
     /**
      *  业务员 处理 投诉数据
      */

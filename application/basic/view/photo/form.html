@@ -45,8 +45,9 @@
     <script type="text/javascript" charset="utf-8">
         window.form.render();
         /*! 实例富文本编辑器  */
-        require(['ckeditor'], function () {
+       require(['ckeditor'], function () {
             window.createEditor('[name="detail"]', {height: 500});
+           console.log($('[name="detail"]').html());
         });
     </script>
     <style type="text/css">

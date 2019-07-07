@@ -127,7 +127,6 @@ class News extends Controller
             $data['cat_3'] = isset($contentCateArr[2]) ? intval($contentCateArr[2]) : 0;
         }
     }
-
     protected function _form_result($result)
     {
         if ($result !== false)

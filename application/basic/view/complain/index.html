@@ -1,0 +1,72 @@
+{extend name='admin@main'}
+
+{block name="button"}
+
+{if auth("basic/complain/add")}
+<button data-open='{:url("add")}' data-title="添加内容" class='layui-btn layui-btn-sm layui-btn-primary'>添加内容</button>
+{/if}
+
+{if auth("basic/complain/del")}
+<button data-action='{:url("del")}' data-rule="id#{key}" data-csrf="{:systoken('basic/news/del')}" data-confirm="确定要删除吗？" class='layui-btn layui-btn-sm layui-btn-primary'>删除内容</button>
+{/if}
+
+{/block}
+{block name="content"}
+<table class="layui-table" lay-skin="line">
+    <caption class="margin-bottom-10 text-left">{include file='complain/index_search'}</caption>
+    {notempty name='list'}
+    <thead>
+    <tr>
+        <!--<th class='list-table-check-td think-checkbox'>-->
+        <!--<input data-auto-none data-check-target='.list-check-box' type='checkbox'>-->
+        <!--</th>-->
+        <!--<th class='list-table-sort-td'>-->
+        <!--<button type="button" data-reload class="layui-btn layui-btn-xs">排 序</button>-->
+        <!--</th>-->
+        <th class='text-left nowrap'>投诉标题</th>
+        <th class='text-left nowrap'>投诉内容</th>
+        <th class='text-left nowrap'>图片</th>
+        <th class='text-left nowrap'>投诉地区</th>
+        <th class='text-left nowrap'>归属部门</th>
+        <th class='text-left nowrap'>受理状态</th>
+        <th class='text-left nowrap'>处理意见</th>
+        <th class='text-left nowrap'>操作</th>
+    </tr>
+    </thead>
+    {/notempty}
+    <tbody>
+    {foreach $list as $key=>$vo}
+    <tr data-dbclick>
+        <td class='text-left'>{$vo.complainTitle|out}</td>
+        <td class='text-left'>{$vo.complainContent|out}</td>
+        <td class='text-left'>{$vo.image|out}</td>
+        <td class='text-left'>{$vo.complainArea|out}</td>
+        <td class='text-left'>{$vo.complainBelong|out}</td>
+        <td class='text-left'>{$vo.is_accept|out}</td>
+        <td class='text-left'>{$vo.complainDealResult|out}</td>
+        </td>
+        <!--<td class='text-left nowrap'>-->
+            <!--{eq name='vo.status' value='0'}<span class="layui-badge">已禁用</span>{else}<span class="layui-badge layui-bg-green">使用中</span>{/eq}-->
+        <!--</td>-->
+        <td class='text-left nowrap'>
+            {if auth("basic/complain/edit")}
+            <a data-dbclick class="layui-btn layui-btn-xs" data-title="编辑" data-open='{:url("basic/complain/edit")}?id={$vo.id}'>编 辑</a>
+            {/if}
+
+            {if $vo.status eq 1 and auth("basic/complain/forbid")}
+            <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0" data-csrf="{:systoken('basic/complain/forbid')}">禁 用</a>
+            {elseif auth("basic/complain/resume")}
+            <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('resume')}" data-value="id#{$vo.id};status#1" data-csrf="{:systoken('basic/complain/resume')}">启 用</a>
+            {/if}
+
+            {if auth("basic/complain/del")}
+            <a class="layui-btn layui-btn-danger layui-btn-xs" data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.id}" data-csrf="{:systoken('basic/news/del')}">删 除</a>
+            {/if}
+
+        </td>
+    </tr>
+    {/foreach}
+    </tbody>
+</table>
+{/block}
+{empty name='list'}<span class="notdata">没有记录哦</span>{else}{$pagehtml|raw|default=''}{/empty}

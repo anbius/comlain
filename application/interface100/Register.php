@@ -26,10 +26,14 @@ class Register extends Controller
      * */
     public function Register()
     {
+        $file = request();
+        echo '<pre>';
+        print_r($file);
+        die;
         //todo 密码加密 验证 是否重复  密码MD5一下
         //普通投诉用户注册 默认字段
         //ip/index/app.html?edition=1.0.0&interface=Banner&api=lists
-        $data = $this->request->post();
+        $data = request()->post();
         $data = [
             'userName'=>'sniper',
             'password'=>'sniper',
