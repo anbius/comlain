@@ -47,4 +47,8 @@ class Common extends Controller{
         return  $sectionArr;
 
     }
+    public static function AllSeeId(){
+           $AllSeeId = 5; //生态环境部门
+           return $AllSeeId;
+    }
 }

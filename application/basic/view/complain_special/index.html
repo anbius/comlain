@@ -1,19 +1,10 @@
 {extend name='admin@main'}
 
 {block name="button"}
-
-{if auth("basic/complain/add")}
-<button data-open='{:url("add")}' data-title="添加内容" class='layui-btn layui-btn-sm layui-btn-primary'>添加内容</button>
-{/if}
-
-{if auth("basic/complain/del")}
-<button data-action='{:url("del")}' data-rule="id#{key}" data-csrf="{:systoken('basic/news/del')}" data-confirm="确定要删除吗？" class='layui-btn layui-btn-sm layui-btn-primary'>删除内容</button>
-{/if}
-
 {/block}
 {block name="content"}
 <table class="layui-table" lay-skin="line">
-    <caption class="margin-bottom-10 text-left">{include file='complain/index_search'}</caption>
+    <caption class="margin-bottom-10 text-left">{include file='complain_special/index_search'}</caption>
     {notempty name='list'}
     <thead>
     <tr>
@@ -49,21 +40,17 @@
             <!--{eq name='vo.status' value='0'}<span class="layui-badge">已禁用</span>{else}<span class="layui-badge layui-bg-green">使用中</span>{/eq}-->
         <!--</td>-->
         <td class='text-left nowrap'>
-            <!--{if auth("basic/complain/supervise")}-->
-            {if $showSupvise eq 1}
-            <a data-dbclick class="layui-btn layui-btn-xs" data-title="督办"  data-action="{:url('supervise')}" data-value="id#{$vo.id};status#0" data-csrf="{:systoken('basic/complain/supervise')}"> 督办</a>
-            {/if}
-            {if auth("basic/complain/edit")}
-            <a data-dbclick class="layui-btn layui-btn-xs" data-title="编辑" data-open='{:url("basic/complain/edit")}?id={$vo.id}'>编 辑</a>
+            {if auth("basic/complainSpecial/edit")}
+            <a data-dbclick class="layui-btn layui-btn-xs" data-title="编辑" data-open='{:url("basic/complainSpecial/edit")}?id={$vo.id}'>编 辑</a>
             {/if}
 
-            {if $vo.status eq 1 and auth("basic/complain/forbid")}
-            <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0" data-csrf="{:systoken('basic/complain/forbid')}">禁 用</a>
-            {elseif auth("basic/complain/resume")}
-            <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('resume')}" data-value="id#{$vo.id};status#1" data-csrf="{:systoken('basic/complain/resume')}">启 用</a>
+            {if $vo.status eq 1 and auth("basic/complainSpecial/forbid")}
+            <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0" data-csrf="{:systoken('basic/complainSpecial/forbid')}">禁 用</a>
+            {elseif auth("basic/complainSpecial/resume")}
+            <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('resume')}" data-value="id#{$vo.id};status#1" data-csrf="{:systoken('basic/complainSpecial/resume')}">启 用</a>
             {/if}
 
-            {if auth("basic/complain/del")}
+            {if auth("basic/complainSpecial/del")}
             <a class="layui-btn layui-btn-danger layui-btn-xs" data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.id}" data-csrf="{:systoken('basic/news/del')}">删 除</a>
             {/if}
 

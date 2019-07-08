@@ -15,12 +15,12 @@ use think\Db;
 
 
 
-class Complain extends Controller
+class ComplainSpecial extends Controller
 {
     public $table = 'complain';
 
     /**
-     * 内容列表 普通投诉 登陆用户 能看到所有区域本部门的投诉  但是只能处理 自己所属账号地区的投诉
+     * 内容列表 监督投诉
      */
     public function index()
     {
@@ -28,7 +28,7 @@ class Complain extends Controller
         $this->title = '投诉管理';
         $where['status']    = 1;
         $where['is_delete'] = 0;
-        $where['is_supervise'] = 0;
+        $where['is_supervise'] = 1;
         if($userData['belong'] && $userData['belong']!=5){//投诉归属部门  5 为环境保护部门
             $where['complainBelong'] = $userData['belong'];
         }
@@ -50,7 +50,7 @@ class Complain extends Controller
      */
     public function edit()
     {
-        $this->title = '内容编辑';
+        $this->title = '投诉内容编辑';
         return $this->_form($this->table, 'form');
     }
 
@@ -81,11 +81,6 @@ class Complain extends Controller
         $this->_save($this->table, ['status' => '1']);
     }
 
-    public function supervise(){
-//        $this->applyCsrfToken();
-        $this->_save($this->table, ['is_supervise' => '1']);
-    }
-
     /**
      * 处理数据
      * @param $data
@@ -105,15 +100,6 @@ class Complain extends Controller
              ['id'=>2,'complainSource'=>'重大投诉']
          ];
         $this->assign('cates',$search);
-        //是否有督办权限
-        $userData = session('user');
-        $belong = $userData['belong'];
-        if($belong == Common::AllSeeId() || $userData['username']=='admin' ){
-            $showSupvise = 1;
-        }else{
-            $showSupvise  = 0;
-        }
-        $this->assign('showSupvise',$showSupvise);
        // echo Db::name('complain')->getLastSql();die;
         $sectionArr = Common::section();
 
@@ -212,11 +198,10 @@ class Complain extends Controller
             }else{
                 $res = 0;
             }
-           if($user['username']=='admin'){
-               $res = 1;
-           }
+            if($user['username']=='admin'){
+                $res = 1;
+            }
             $this->assign('showDeal',$res);
-
         }
 
         if ($this->request->isPost())
@@ -230,7 +215,7 @@ class Complain extends Controller
     {
         if ($result !== false)
         {
-            list($base, $spm, $url) = [url('@admin'), $this->request->get('spm'), url('basic/complain/index')];
+            list($base, $spm, $url) = [url('@admin'), $this->request->get('spm'), url('basic/complainSpecial/index')];
             $this->success('数据保存成功！', "{$base}#{$url}?spm={$spm}");
         }
     }
