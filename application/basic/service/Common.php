@@ -22,8 +22,8 @@ class Common extends Controller{
             ],
             'area'    =>[
                 '100011'=>[
-                    ['id'=>'1000111','title'=>'甘州区'],
                     ['id'=>'1000112','title'=>'市辖区'],
+                    ['id'=>'1000111','title'=>'甘州区'],
                     ['id'=>'1000113','title'=>'临泽县'],
                     ['id'=>'1000114','title'=>'高台县'],
                     ['id'=>'1000115','title'=>'山丹县'],
@@ -38,11 +38,11 @@ class Common extends Controller{
     public static function section(){
         $sectionArr = [
             ['id'=>1,'name'=>'文广旅游部门'],
-            ['id'=>2,'name'=>'城市管理行政执法部门'],
+            ['id'=>2,'name'=>'城管执法部门'],
             ['id'=>3,'name'=>'公安部门'],
             ['id'=>4,'name'=>'市场监督部门'],
-            ['id'=>5,'name'=>'生态环境保护综合监督部门'],
-            ['id'=>6,'name'=>'畜牧兽医主管部门']
+            ['id'=>5,'name'=>'生态环境部门'],
+            ['id'=>6,'name'=>'畜牧兽医部门']
         ];
         return  $sectionArr;
 

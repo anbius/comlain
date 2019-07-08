@@ -10,6 +10,34 @@
                 <!--{/if}-->
             </div>
         </div>
+        <div  class="layui-form-item">
+            <label class="layui-form-label label-required">用户部门</label>
+            <div class="layui-input-block">
+                <select name="belong"  class="layui-input-block">
+                    <option value="0">请选择</option>
+                    {foreach $department as $key=>$dpvo}
+                    <option value="{$dpvo.id}">{$dpvo.name|out}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div  class="layui-form-item">
+            <label class="layui-form-label label-required">用户地区</label>
+            <div class="layui-input-block">
+                <select name="province"  class="layui-input-block">
+                    <option value="10001">甘肃省</option>
+                </select>
+                <select name="city"  class="layui-input-block">
+                    <option value="100011">张掖市</option>
+                </select>
+                <select name="area"  class="layui-input-block">
+                    <option value="0">----</option>
+                    {foreach $areaArr as $area}
+                        <option value="{$area.id}">{$area.title|default=''|out}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
         <div class="layui-form-item">
             <label class="layui-form-label">联系手机</label>
             <div class="layui-input-block">
@@ -37,7 +65,11 @@
                 {/foreach}
                 {if empty($authorizes)}<span class="color-desc" style="line-height:36px">未配置权限</span>{/if}
             </div>
-        </div>
+
+            <script>
+                $('[name="area"]').val("{$vo.area}");
+                $('[name="belong"]').val("{$vo.belong}");
+            </script>
         <!--{/if}-->
         <div class="layui-form-item">
             <label class="layui-form-label">用户描述</label>

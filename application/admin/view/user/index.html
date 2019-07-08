@@ -25,6 +25,8 @@
         <th class='text-left nowrap' style="width:120px">账号状态</th>
         <th class='text-left nowrap' style="width:180px">创建时间</th>
         <th class='text-left nowrap' style="width:150px">最后登录</th>
+        <th class='text-left nowrap' style="width:180px">所属部门</th>
+        <th class='text-left nowrap' style="width:180px">所属于地区</th>
         <th class='text-left nowrap'>操作</th>
     </tr>
     </thead>
@@ -43,6 +45,8 @@
         </td>
         <td class='text-left nowrap'>日期：{$vo.create_at|date_time|str_replace=' ','<br>时间：',###|raw}</td>
         <td class='text-left nowrap'>{if $vo.login_num>0}日期：{$vo.login_at|date_time|str_replace=' ','<br>时间：',###|raw}{else} -- {/if}</td>
+        <td class='text-left nowrap'>{$vo.belong}</td>
+        <td class='text-left nowrap'>{$vo.area}</td>
         <td class='text-left nowrap'>
 
             {if auth("admin/user/auth")}

@@ -4,6 +4,7 @@ namespace app\admin\controller;
 
 use library\Controller;
 use library\tools\Data;
+use app\basic\service\Common as Common;
 use think\Db;
 
 /**
@@ -51,6 +52,11 @@ class User extends Controller
     public function add()
     {
         $this->applyCsrfToken();
+        $departInfo = Common::section();
+        $this->assign('department',$departInfo);
+        $areaInfo = Common::getAreaInfo();
+        $area     = $areaInfo['area']['100011'];
+        $this->assign('areaArr',$area);
         $this->_form($this->table, 'form');
     }
 
@@ -61,6 +67,11 @@ class User extends Controller
     public function edit()
     {
         $this->applyCsrfToken();
+        $departInfo = Common::section();
+        $this->assign('department',$departInfo);
+        $areaInfo = Common::getAreaInfo();
+        $area     = $areaInfo['area']['100011'];
+        $this->assign('areaArr',$area);
         $this->_form($this->table, 'form');
     }
 
@@ -138,12 +149,33 @@ class User extends Controller
     public function _form_filter(&$data)
     {
         if ($this->request->isPost()) {
+            /**/
+            if(!$data['area']){
+                $this->error('请选择地区');
+            }
+            if(!$data['belong']){
+                $this->error('请选择用户所在部门');
+            }
+            $data['area'] = $data['province'].','.$data['city'].','.$data['area'];
+            unset($data['province']);
+            unset($data['city']);
+            /**/
             $data['authorize'] = (isset($data['authorize']) && is_array($data['authorize'])) ? join(',', $data['authorize']) : '';
             if (isset($data['id'])) unset($data['username']);
             elseif (Db::name($this->table)->where(['username' => $data['username']])->count() > 0) {
                 $this->error('用户账号已经存在，请使用其它账号！');
             }
         } else {
+            if(!isset($data['area']))$data['area']='';
+            if(!isset($data['belong']))$data['belong']='';
+            if(count($data)){
+                $areaInfo = explode(',',$data['area']);
+                if(count($areaInfo)){
+                    if(!isset($areaInfo[2]))$areaInfo[2]=0;
+                    $data['area'] = $areaInfo[2];
+                }
+            }
+
             $data['authorize'] = explode(',', isset($data['authorize']) ? $data['authorize'] : '');
             $this->assign('authorizes', Db::name('SystemAuth')->where(['status' => '1'])->select());
         }
@@ -160,4 +192,69 @@ class User extends Controller
             $data['create_at'] = time();
         }
     }
+
+    protected function _page_filter(&$data)
+    {
+        $areaInfo = Common::getAreaInfo();
+        // echo Db::name('complain')->getLastSql();die;
+        $sectionArr = Common::section();
+
+        foreach($data as &$val){
+            if($val['area']){
+                $val['area'] = $this->getTurmAreaName($val['area'],$areaInfo);
+            }
+            $val['belong'] = $this->choseSection($val['belong'],$sectionArr);
+        }
+    }
+    public function choseSection($belongId,$sectionArr){
+        foreach($sectionArr as $seckey=>$section){
+            if(intval($belongId) ==intval($section['id'])){
+                $belongName = $section['name'];
+                break;
+            }else{
+                $belongName = '暂无';
+            }
+        }
+        return $belongName;
+    }
+    public function getTurmAreaName($area,$areaInfo){
+        $areaArr    = explode(',',$area);
+        $provinceId = $areaArr[0];
+        $cityId     = $areaArr[1];
+        $areaId     = $areaArr[2];
+        //省
+        foreach($areaInfo['province'] as $proVal){
+            if(intval($proVal['id'])==intval($provinceId)){
+                $provinceName = $proVal['title'];
+                break;
+            }
+        }
+        //市
+        foreach($areaInfo['city'] as $cityKey=>$cityArr){
+            if($cityKey ==$provinceId ){
+                foreach($cityArr as $cityVal){
+                    if(intval($cityVal['id']) == intval($cityId)){
+                        $cityName = $cityVal['title'];
+                        break;
+                    }
+                }
+            }
+        }
+        //区
+        foreach($areaInfo['area'] as $areakey=>$areaArrs){
+            if($areakey == $cityId ){
+                foreach($areaArrs as $areVal){
+                    if(intval($areVal['id']) == intval($areaId)){
+                        $areaName = $areVal['title'];
+                        break;
+                    }else{
+                        $areaName = '';
+                    }
+                }
+            }
+        }
+        $res = $provinceName.','.$cityName.','.$areaName;
+        return $res;
+    }
+
 }

@@ -20,14 +20,18 @@ class Complain extends Controller
     public $table = 'complain';
 
     /**
-     * 内容列表 普通投诉
+     * 内容列表 普通投诉 登陆用户 能看到所有区域本部门的投诉  但是只能处理 自己所属账号地区的投诉
      */
     public function index()
     {
+        $userData = session('user');
         $this->title = '投诉管理';
         $where['status']    = 1;
         $where['is_delete'] = 0;
         $where['is_supervise'] = 0;
+        if($userData['belong'] && $userData['belong']!=5){//投诉归属部门  5 为环境保护部门
+            $where['complainBelong'] = $userData['belong'];
+        }
       //  $this->_query($this->table)->like('title')->equal('type')->where(['is_deleted' => '1'])->timeBetween('create_at')->order('status desc,sort desc,id desc')->page();
         $this->_query($this->table)->like('complainTitle')->equal('complainSource')->where($where)->order('complainBelong desc,id desc')->page();
     }
@@ -175,10 +179,30 @@ class Complain extends Controller
     {
         if($this->request->isGet())
         {
-            //TODO 控制是否将此信息在首页显示
            // $this->assign('isHomepage',1);
             $departInfo = Common::section();
             $this->assign('department',$departInfo);
+            $user = session('user');
+            $area = $user['area'];
+            $complainArea = $data['complainArea'];
+            $complainAreaArr = explode(',',$complainArea);
+            if(!$area){
+                $area = '0,0,0';
+            }
+            $areaArr = explode(',',$area);
+            if(empty($areaArr)){
+                $areaArr[2] = '';
+            }
+            if(intval($complainAreaArr[2]) == intval($areaArr[2])){
+                $res = 1;
+            }else{
+                $res = 0;
+            }
+           if($user['username']=='admin'){
+               $res = 1;
+           }
+            $this->assign('showDeal',$res);
+
         }
 
         if ($this->request->isPost())

@@ -37,13 +37,13 @@
             </select>
         </div>
         <!--todo 只有受理的才能填写处理意见-->
-        <div class="layui-form-item block relative">
-            <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px"></sup>处理意见</h3>
-            <textarea class="layui-textarea" name="complainDealResult" placeholder="请填写处理意见~" maxlength="500">{$vo.complainDealResult|default=''|text_alert_out}</textarea>
-        </div>
-
-
-
+        <!--todo 登陆地区一致 允许处理-->
+        {if condition = "$showDeal eq 1"}
+            <div class="layui-form-item block relative">
+                <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px"></sup>处理意见</h3>
+                <textarea class="layui-textarea" name="complainDealResult" placeholder="请填写处理意见~" maxlength="500">{$vo.complainDealResult|default=''|text_alert_out}</textarea>
+            </div>
+        {/if}
         <div class="layui-form-item text-center">
             {notempty name='vo.id'}<input type="hidden" name="id" value="{$vo.id}">{/notempty}
             <button class="layui-btn layui-btn-danger" onclick="window.history.back()" type="button">取消编辑</button>
