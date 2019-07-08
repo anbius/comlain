@@ -13,7 +13,7 @@ use think\Db;
 
 /**
  * Class Register
- * ×¢²áµÇÂ½
+ * æ³¨å†Œç™»é™†
  */
 class Register extends Controller
 {
@@ -22,16 +22,23 @@ class Register extends Controller
        //$this->registerModel = D('register');
     }
     /*
-     * ×¢²á
+     * æ³¨å†Œ
      * */
     public function Register()
     {
+        $result = 1;
+        $return = ['code'=>200,'message'=>'æˆåŠŸ','res'=>$result];
+
+        echo '<pre>';
+print_r($return);
+print_r(json_encode($return));
+die;
         $file = request();
         echo '<pre>';
         print_r($file);
         die;
-        //todo ÃÜÂë¼ÓÃÜ ÑéÖ¤ ÊÇ·ñÖØ¸´  ÃÜÂëMD5Ò»ÏÂ
-        //ÆÕÍ¨Í¶ËßÓÃ»§×¢²á Ä¬ÈÏ×Ö¶Î
+        //todo å¯†ç åŠ å¯† éªŒè¯ æ˜¯å¦é‡å¤  å¯†ç MD5ä¸€ä¸‹
+        //æ™®é€šæŠ•è¯‰ç”¨æˆ·æ³¨å†Œ é»˜è®¤å­—æ®µ
         //ip/index/app.html?edition=1.0.0&interface=Banner&api=lists
         $data = request()->post();
         $data = [
@@ -44,25 +51,33 @@ class Register extends Controller
         $password = $data['password'];
         $mobile   = $data['mobile'];
         $where['userName'] = $userName;
-        /*¼ì²éÎ¨Ò»ÐÔ ÓÃ»§Ãû×¢²á*/
+        /*æ£€æŸ¥å”¯ä¸€æ€§ ç”¨æˆ·åæ³¨å†Œ*/
         $judge = Db::name('register_user')->where($where)->find();
         if($judge){
-            $result = 4;
-            return  ['message'=>BaseService::$ERR['USER']['HANDLE_SUCCESS'],'data'=>['reigster'=>$result]];
+            $code    = 201;
+            $message ='ç”¨æˆ·åé‡å¤';
+            $res    = 'å¤±è´¥';
+            $return = ['code'=>$code,'message'=>$message,'res'=>$res];
+
+            return json_encode($return);
         }
         $result =  Db::name('register_user')->data($data)->insert();
-        echo '<pre>';
-        print_r($result);
-        die;
-
-        $return = ['message'=>BaseService::$ERR['SYS']['HANDLE_SUCCESS'],'data'=>['reigster'=>$result]];
-
-        return $return;
+        if($result){
+            $code    = 200;
+            $message ='æ³¨å†ŒæˆåŠŸ';
+            $res     = 'æˆåŠŸ';
+        }else{
+            $code    = 203;
+            $message ='æ³¨å†Œå¤±è´¥ï¼Œè¯·ç¨å€™å†è¯•';
+            $res     = 'å¤±è´¥';
+        }
+        $return = ['code'=>$code,'message'=>$message,'res'=>$res];
+        return json_encode($return);
     }
 
 
     /**
-     * µÇÂ½
+     * ç™»é™†
      */
     public function login()
     {
@@ -82,12 +97,12 @@ class Register extends Controller
             }else{
                 $message = BaseService::$ERR['USER']['LOGIN_USER_ERR'];
                 $result  = 2;
-               //ÃÜÂë´íÎó
+               //å¯†ç é”™è¯¯
             }
         }else{
             $message = BaseService::$ERR['USER']['REGISTER_USER_ERROR'];
             $result  = 1;
-           //ÓÃ»§²»´æÔÚ
+           //ç”¨æˆ·ä¸å­˜åœ¨
         }
       /**/
         $return = ['message'=>$message,'data'=>$result];
