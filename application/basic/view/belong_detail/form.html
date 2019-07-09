@@ -1,0 +1,40 @@
+{extend name='admin@main'}
+
+{block name="content"}
+<form autocomplete="off" onsubmit="return false;" action="{:request()->url()}" data-auto="true" method="post" class='layui-form layui-card'>
+
+    <div class="layui-card-body padding-left-40">
+
+            <div class="layui-form-item block relative">
+                <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px"></sup>详情描述</h3>
+                <textarea class="layui-textarea" name="content" placeholder="请填写本部门详情~" maxlength="500">{$vo.content|default=''|text_alert_out}</textarea>
+            </div>
+
+        <div class="layui-form-item text-center">
+            {notempty name='vo.id'}<input type="hidden" name="id" value="{$vo.id}">{/notempty}
+            <button class="layui-btn layui-btn-danger" onclick="window.history.back()" type="button">取消编辑</button>
+            <button class="layui-btn" type="submit">保存配置</button>
+        </div>
+
+    </div>
+
+    <script type="text/javascript" charset="utf-8">
+        window.laydate.render({ elem: '#create_at' , type: 'datetime'});
+        window.form.render();
+        /*! 实例富文本编辑器  */
+        require(['ckeditor'], function () {
+            window.createEditor('[name="content"]', {height: 500});
+        });
+    </script>
+    <style type="text/css">
+        .background-item {
+            padding: 15px;
+            background: #efefef;
+        }
+
+        .background-item thead tr {
+            background: #e0e0e0
+        }
+    </style>
+</form>
+{/block}

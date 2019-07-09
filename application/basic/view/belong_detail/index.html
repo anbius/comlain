@@ -1,0 +1,46 @@
+{extend name='admin@main'}
+
+{block name="button"}
+
+{if auth("basic/BelongDetail/add")}
+        {if $hasdoneDetail eq 0}
+        <button data-open='{:url("add")}' data-title="添加内容" class='layui-btn layui-btn-sm layui-btn-primary'>添加内容</button>
+        {/if}
+{/if}
+
+
+{/block}
+{block name="content"}
+<table class="layui-table" lay-skin="line">
+    <caption class="margin-bottom-10 text-left">{include file='belong_detail/index_search'}</caption>
+    {notempty name='list'}
+    <thead>
+    <tr>
+        <th class='text-left nowrap'>部门名称</th>
+        <th class='text-left nowrap'>部门详情描述</th>
+        <th class='text-left nowrap'>操作</th>
+
+    </tr>
+    </thead>
+    {/notempty}
+    <tbody>
+    {foreach $list as $key=>$vo}
+    <tr data-dbclick>
+        <td class='text-left'>{$vo.belongId|out}</td>
+        <td class='text-left'>{$vo.content|out}</td>
+        <td class='text-left nowrap'>
+            {if auth("basic/BelongDetail/edit")}
+            <a data-dbclick class="layui-btn layui-btn-xs" data-title="编辑" data-open='{:url("basic/BelongDetail/edit")}?id={$vo.id}'>编 辑</a>
+            {/if}
+
+            {if auth("basic/BelongDetail/del")}
+            <a class="layui-btn layui-btn-danger layui-btn-xs" data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.id}" data-csrf="{:systoken('basic/BelongDetail/del')}">删 除</a>
+            {/if}
+
+        </td>
+    </tr>
+    {/foreach}
+    </tbody>
+</table>
+{/block}
+{empty name='list'}<span class="notdata">没有记录哦</span>{else}{$pagehtml|raw|default=''}{/empty}
