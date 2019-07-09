@@ -8,6 +8,7 @@
 namespace app\interface100;
 
 use library\lsy\Base as BaseService;
+use app\basic\service\Common as Common;
 use think\Controller;
 use think\Db;
 
@@ -46,11 +47,10 @@ die;
             'password'=>'sniper',
             'mobile'=>'15853197991'
         ];
-
-        $userName = $data['userName'];
-        $password = $data['password'];
-        $mobile   = $data['mobile'];
         $where['userName'] = $userName;
+        $insertData['userName'] = $data['userName'];
+        $insertData['password'] = md5($data['password']);
+        $insertData['mobile']   = $data['mobile'];
         /*检查唯一性 用户名注册*/
         $judge = Db::name('register_user')->where($where)->find();
         if($judge){
@@ -61,7 +61,7 @@ die;
 
             return json_encode($return);
         }
-        $result =  Db::name('register_user')->data($data)->insert();
+        $result =  Db::name('register_user')->data($insertData)->insert();
         if($result){
             $code    = 200;
             $message ='注册成功';
@@ -81,31 +81,28 @@ die;
      */
     public function login()
     {
-        $data = $this->request->get();
-/**/
-
-        $login['userName'] = $data['userName'];
-      //  $login['password'] = $data['password'];
-        $user = Db::name('register_user')->field('password')->where($login)->find();
+        $data = $this->request->post();
+        $inputPassword = md5($data['password']);
+        $login['userName'] = $data['userName'] ;
+        $login['password'] = $inputPassword ;
+        $user = Db::name('register_user')->field('*')->where($login)->find();
      //   $user=Db::name('admin')->where('username','=',$data['username'])->find();
-        if($user){
-            if($user['password'] == $data['password']){
-                session('username',$user['username']);
-                session('uid',$user['id']);
-                $message = BaseService::$ERR['USER']['LOGIN_SUCCESS'];
-                $result  = 3;
+        $userInfo = [];
+        if($user['id']){
+            if($user['password'] == $inputPassword){
+                $message = '登陆成功';
+                $userInfo = $user;
+                $code  = 3;
             }else{
-                $message = BaseService::$ERR['USER']['LOGIN_USER_ERR'];
-                $result  = 2;
-               //密码错误
+                $code  = 2;
+                $message = '密码错误';
+                //密码错误
             }
         }else{
-            $message = BaseService::$ERR['USER']['REGISTER_USER_ERROR'];
-            $result  = 1;
+            $code    = 1;
+            $message = '用户不存在';
            //用户不存在
         }
-      /**/
-        $return = ['message'=>$message,'data'=>$result];
-        return $return;
+        return Common::jsonTo($code,$message,$userInfo);
     }
 }

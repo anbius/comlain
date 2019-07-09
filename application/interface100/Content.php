@@ -161,11 +161,11 @@ class Content extends Controller
      */
     public function commentList()
     {
-        $data = $this->request->get();
-
-        $where['id'] = isset($data['id']) && is_numeric($data['id']) ? trim($data['id']) : 0;
+        $data = $this->request->get();  $where['id'] = isset($data['id']) && is_numeric($data['id']) ? trim($data['id']) : 0;
         $where['is_deleted'] = 1;
         $where['status'] = 1;
+
+
 
         $page = isset($data['page']) && is_numeric($data['page']) && ($data['page'] > 1) ? abs(intval($data['page'])) : 2;
         $limit = $this->commentLimit;

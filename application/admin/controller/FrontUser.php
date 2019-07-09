@@ -19,8 +19,8 @@ class FrontUser extends Controller
      * 指定当前数据表
      * @var string
      */
- //   public $table = 'register_user';
-    public $table = 'SystemUser';
+    public $table = 'Register_user';
+   // public $table = 'SystemUser';
 
     /**
      * 系统用户管理
@@ -32,8 +32,9 @@ class FrontUser extends Controller
      */
     public function index()
     {
-        $this->title = '系统用户管理';
-        $this->_query($this->table)->where(['is_deleted' => '1'])->like('username,phone,mail')->timeBetween('login_at')->equal('status')->page();
+        $this->title = '系统app用户管理';
+        $where['status']='1';
+        $this->_query($this->table)->where($where)->like('userName,mobile')->equal('status')->page();
     }
 
     /**
@@ -52,12 +53,36 @@ class FrontUser extends Controller
      */
     public function add()
     {
+        //获取登录用户的所在地区权限  todo
+        $userData = session('user');
+        $loginUserArea = $userData['area'];
+        $loginUserBelong = $userData['belong'];
         $this->applyCsrfToken();
         $departInfo = Common::section();
-        $this->assign('department',$departInfo);
         $areaInfo = Common::getAreaInfo();
         $area     = $areaInfo['area']['100011'];
+        if(!$loginUserArea)$loginUserArea='0,0,0';
+        $loginerArea = explode(',',$loginUserArea)[2];
+        $addLoginArea = [];
+        foreach($area as $ak=>$akval){
+            if(intval($akval['id']) == intval($loginerArea) ){
+                $addLoginArea[]=$area[$ak];
+                break;
+            }
+        }
+        foreach($departInfo as $dkey=>$dval){
+            if(intval($dval['id']) == intval($loginUserBelong) ){
+                $loginBelong[]=$departInfo[$dkey];
+                break;
+            }
+        }
+        if($userData['username']=='admin' || $userData['belong']==common::AllSeeId()){
+            $addLoginArea    = $area;
+            $loginBelong = $departInfo;
+        }
         $this->assign('areaArr',$area);
+        $this->assign('addLoginArea',$addLoginArea);
+        $this->assign('department',$loginBelong);
         $this->_form($this->table, 'form');
     }
 
@@ -72,7 +97,7 @@ class FrontUser extends Controller
         $this->assign('department',$departInfo);
         $areaInfo = Common::getAreaInfo();
         $area     = $areaInfo['area']['100011'];
-        $this->assign('areaArr',$area);
+        $this->assign('addLoginArea',$area);
         $this->_form($this->table, 'form');
     }
 
@@ -84,6 +109,7 @@ class FrontUser extends Controller
      */
     public function pass()
     {
+        //todo 密码生成规则
         $this->applyCsrfToken();
         if ($this->request->isGet()) {
             $this->verify = false;
@@ -162,11 +188,14 @@ class FrontUser extends Controller
             unset($data['city']);
             /**/
             $data['authorize'] = (isset($data['authorize']) && is_array($data['authorize'])) ? join(',', $data['authorize']) : '';
-            if (isset($data['id'])) unset($data['username']);
-            elseif (Db::name($this->table)->where(['username' => $data['username']])->count() > 0) {
+            if (isset($data['id'])) unset($data['userName']);
+            elseif (Db::name($this->table)->where(['userName' => $data['userName']])->count() > 0) {
                 $this->error('用户账号已经存在，请使用其它账号！');
             }
-        } else {
+            $data['isNormalUser'] = 1;//后台注册
+            $data['authorize'] = explode(',', isset($data['authorize']) ? $data['authorize'] : '');
+            $this->assign('authorizes', Db::name('SystemAuth')->where(['status' => '1'])->select());
+        }else{
             if(!isset($data['area']))$data['area']='';
             if(!isset($data['belong']))$data['belong']='';
             if(count($data)){
@@ -176,9 +205,6 @@ class FrontUser extends Controller
                     $data['area'] = $areaInfo[2];
                 }
             }
-
-            $data['authorize'] = explode(',', isset($data['authorize']) ? $data['authorize'] : '');
-            $this->assign('authorizes', Db::name('SystemAuth')->where(['status' => '1'])->select());
         }
     }
 
@@ -199,7 +225,6 @@ class FrontUser extends Controller
         $areaInfo = Common::getAreaInfo();
         // echo Db::name('complain')->getLastSql();die;
         $sectionArr = Common::section();
-
         foreach($data as &$val){
             if($val['area']){
                 $val['area'] = $this->getTurmAreaName($val['area'],$areaInfo);
@@ -223,6 +248,9 @@ class FrontUser extends Controller
         $provinceId = $areaArr[0];
         $cityId     = $areaArr[1];
         $areaId     = $areaArr[2];
+        $provinceName = '';
+        $cityName     = '';
+        $areaName     = '';
         //省
         foreach($areaInfo['province'] as $proVal){
             if(intval($proVal['id'])==intval($provinceId)){
@@ -255,7 +283,7 @@ class FrontUser extends Controller
             }
         }
         $res = $provinceName.','.$cityName.','.$areaName;
-        return $res;
+        return trim($res,',');
     }
 
 }

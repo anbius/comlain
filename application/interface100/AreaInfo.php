@@ -13,7 +13,7 @@ use think\Db;
 
 /**
  * Class Register
- * 注册登陆
+ * ?????
  */
 class AreaInfo extends Controller
 {
@@ -22,17 +22,12 @@ class AreaInfo extends Controller
         //$this->registerModel = D('register');
     }
     /*
-     * 注册
+     * ???
      * */
     public function AreaInfo()
     {
          $areainfo = [
-            '1'=> '文化旅游部门',
-             '2'=>'城市管理行政执法部门',
-             '3'=>'公安部门',
-             '4'=>'市场监督部门',
-             '5'=>'生态环境保护综合监督部门',
-             '6'=>'畜牧兽医主管部门',
+
          ];
 
         return $areainfo;
@@ -41,6 +36,6 @@ class AreaInfo extends Controller
     public function getAreaInfoById(){
        //
         $data = $this->request->get();
-        //获取 具体某个部门详细信息
+
     }
 }

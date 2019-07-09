@@ -150,15 +150,18 @@ class User extends Controller
     {
         if ($this->request->isPost()) {
             /**/
-            if(!$data['area']){
-                $this->error('请选择地区');
+            if(!isset($data['autherSubmit'])){
+                if(!$data['area']){
+                    $this->error('请选择地区');
+                }
+                if(!isset($data['belong']))$data['belong'] = '';
+                if(!$data['belong']){
+                    $this->error('请选择用户所在部门');
+                }
+                $data['area'] = $data['province'].','.$data['city'].','.$data['area'];
+                unset($data['province']);
+                unset($data['city']);
             }
-            if(!$data['belong']){
-                $this->error('请选择用户所在部门');
-            }
-            $data['area'] = $data['province'].','.$data['city'].','.$data['area'];
-            unset($data['province']);
-            unset($data['city']);
             /**/
             $data['authorize'] = (isset($data['authorize']) && is_array($data['authorize'])) ? join(',', $data['authorize']) : '';
             if (isset($data['id'])) unset($data['username']);

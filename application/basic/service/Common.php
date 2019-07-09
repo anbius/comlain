@@ -51,4 +51,85 @@ class Common extends Controller{
            $AllSeeId = 5; //生态环境部门
            return $AllSeeId;
     }
+
+    public static function  choseSection($belongId,$sectionArr=[]){
+        if(!$sectionArr)$sectionArr = self::section();
+         foreach($sectionArr as $seckey=>$section){
+        if(intval($belongId) ==intval($section['id'])){
+            $belongName = $section['name'];
+            break;
+        }else{
+            $belongName = '暂无';
+        }
+    }
+         return $belongName;
+     }
+    public static  function getTurmAreaName($area){
+        $areaInfo   = self::getAreaInfo();
+        $areaArr    = explode(',',$area);
+        $provinceId = $areaArr[0];
+        $cityId     = $areaArr[1];
+        $areaId     = $areaArr[2];
+        //省
+        foreach($areaInfo['province'] as $proVal){
+            if(intval($proVal['id'])==intval($provinceId)){
+                $provinceName = $proVal['title'];
+                break;
+            }
+        }
+        //市
+        foreach($areaInfo['city'] as $cityKey=>$cityArr){
+            if($cityKey ==$provinceId ){
+                foreach($cityArr as $cityVal){
+                    if(intval($cityVal['id']) == intval($cityId)){
+                        $cityName = $cityVal['title'];
+                        break;
+                    }
+                }
+            }
+        }
+        //区
+        foreach($areaInfo['area'] as $areakey=>$areaArrs){
+            if($areakey == $cityId ){
+                foreach($areaArrs as $areVal){
+                    if(intval($areVal['id']) == intval($areaId)){
+                        $areaName = $areVal['title'];
+                        break;
+                    }else{
+                        $areaName = '';
+                    }
+                }
+            }
+        }
+        $res = $provinceName.','.$cityName.','.$areaName;
+        return $res;
+    }
+
+    public static function jsonTo($code,$message,$data){
+        $returnData = [
+            'code'=>$code,
+            'message'=>$message,
+            'data'=>$data
+        ];
+        return json_encode($returnData);
+    }
+
+    /**
+     * 计算总页数
+     * @param int $total
+     * @param $limit
+     * @return float|int
+     */
+    public static function totalPages($total = 0, $limit)
+    {
+        if(empty($total))
+        {
+            $pages = 0;
+        }else{
+            $total = is_numeric($total) ? abs(intval($total)) : 0;
+            $pages = ceil($total / $limit);
+        }
+
+        return $pages;
+    }
 }

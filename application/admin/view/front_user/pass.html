@@ -3,13 +3,13 @@
     <div class="layui-card-body">
 
         <div class="layui-form-item">
-            <label class="layui-form-label label-required">用户账号</label>
+            <label class="layui-form-label label-required">用户名称</label>
             <div class="layui-input-block">
-                <!--{if $vo and isset($vo.username)}-->
-                <input disabled value='{$vo.username|default=""}' class="layui-input layui-bg-gray">
+                <!--{if $vo and isset($vo.userName)}-->
+                <input disabled value='{$vo.userName|default=""}' class="layui-input layui-bg-gray">
                 <p class="help-block">用户账号创建后，不允许再次修改。</p>
                 <!--{else}-->
-                <input name="username" value='{$vo.username|default=""}' required pattern="^.{4,}$" placeholder="请输入4位及以上字符用户名称" class="layui-input">
+                <input name="username" value='{$vo.userName|default=""}' required pattern="^.{4,}$" placeholder="请输入4位及以上字符用户名称" class="layui-input">
                 <!--{/if}-->
             </div>
         </div>

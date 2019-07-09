@@ -123,19 +123,8 @@ class Complain extends Controller
                 $val['complainArea'] = $this->getTurmAreaName($val['complainArea'],$areaInfo);
             }
             $val['is_accept']      = $val['is_accept'] ?'已受理':'未受理';
-            $val['complainBelong'] = $this->choseSection($val['complainBelong'],$sectionArr);
+            $val['complainBelong'] = Common::choseSection($val['complainBelong'],$sectionArr);;
         }
-    }
-    public function choseSection($belongId,$sectionArr){
-        foreach($sectionArr as $seckey=>$section){
-            if(intval($belongId) ==intval($section['id'])){
-                $belongName = $section['name'];
-                break;
-            }else{
-                $belongName = '暂无';
-            }
-        }
-        return $belongName;
     }
     public function getTurmAreaName($area,$areaInfo){
         $areaArr    = explode(',',$area);

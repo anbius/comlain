@@ -2,13 +2,13 @@
 
 {block name="button"}
 
-{if auth("basic/complain/add")}
-<button data-open='{:url("add")}' data-title="添加内容" class='layui-btn layui-btn-sm layui-btn-primary'>添加内容</button>
-{/if}
+<!--{if auth("basic/complain/add")}-->
+<!--<button data-open='{:url("add")}' data-title="添加内容" class='layui-btn layui-btn-sm layui-btn-primary'>添加内容</button>-->
+<!--{/if}-->
 
-{if auth("basic/complain/del")}
-<button data-action='{:url("del")}' data-rule="id#{key}" data-csrf="{:systoken('basic/news/del')}" data-confirm="确定要删除吗？" class='layui-btn layui-btn-sm layui-btn-primary'>删除内容</button>
-{/if}
+<!--{if auth("basic/complain/del")}-->
+<!--<button data-action='{:url("del")}' data-rule="id#{key}" data-csrf="{:systoken('basic/news/del')}" data-confirm="确定要删除吗？" class='layui-btn layui-btn-sm layui-btn-primary'>删除内容</button>-->
+<!--{/if}-->
 
 {/block}
 {block name="content"}
