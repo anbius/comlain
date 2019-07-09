@@ -14,7 +14,7 @@ use think\Db;
 
 /**
  * Class DepartViewInfo
- * 部门详情 接口
+ * 閮ㄩ棬璇︽儏 鎺ュ彛
  */
 class DepartViewInfo extends Controller
 {
@@ -30,7 +30,7 @@ class DepartViewInfo extends Controller
         $where['belongId'] = $data['belongId'];
         $viewInfo = Db::name('belong_detail')->field('content')->where($where)->find();
         $code     = 200;
-        $message  = '成功';
+        $message  = '鎴愬姛';
         $result   = [
             'code'=>$code,
             'message'=>$message,
