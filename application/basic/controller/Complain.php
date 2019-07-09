@@ -212,6 +212,10 @@ class Complain extends Controller
         {
             $data['complainBelong'] = empty($data['complainBelong']) ? 0 : abs($data['complainBelong']);
             $data['complainDealResult'] = empty($data['complainDealResult']) ? ' ' : $data['complainDealResult'];
+            if($data['complainDealResult']){
+                $data['is_deal'] = 1;
+                $data['dealDT'] = date('Y-m-d');
+            }
         }
     }
 
