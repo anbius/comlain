@@ -132,4 +132,32 @@ class Common extends Controller{
 
         return $pages;
     }
+
+    public static function Log($info,$file=''){
+        $path = __DIR__;
+        if(!$file)$file='interFace.log';
+        error_log('infoMessage: '.json_encode($info)."\n",3,$path."\\".$file);
+    }
+    public static function Log2($value,$filename){
+        $value = json_encode($value);
+        $path = __DIR__;
+        $LogDir = $path."/".date("Y-m-d");
+        if(!file_exists($LogDir)){
+            mkdir($LogDir);
+            chmod($LogDir, 0777);
+        }
+        if(!$filename)$file='interFace.log';
+        $LogFileName = $LogDir."/".$filename;
+        $bNewLogFile = false;
+        if(!file_exists($LogFileName))
+            $bNewLogFile = true;
+
+        $fo=fopen($LogFileName, "ab");
+        fputs($fo, date("Y-m-d H:i:s").": ".$value."\n");
+        fclose($fo);
+
+        if($bNewLogFile)
+            chmod($LogFileName, 0777);
+    }
+
 }
