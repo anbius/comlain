@@ -33,6 +33,11 @@ class FrontUser extends Controller
     public function index()
     {
         $this->title = '系统app用户管理';
+        $data = session('user');
+        if(!$data['username']=='admin' || !$data['belong'] == Common::AllSeeId()){
+            $where['belong'] = $data['belong'];
+        }
+
         $where['status']='1';
         $this->_query($this->table)->where($where)->like('userName,mobile')->equal('status')->page();
     }
