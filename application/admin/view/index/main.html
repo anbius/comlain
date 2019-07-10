@@ -68,30 +68,6 @@
 {/block}
 {block name="script"}
 <script type="text/javascript" charset="UTF-8">
-    $.ajax({
-        type: 'GET',
-        dataType: 'jsonp',
-        jsonpCallback: 'showLsyInfo',
-        url: 'https://www.longshangyun.com/lsyInfo.json',
-        statusCode: {
-            404: function () {
-                console.log('E404 - 服务器繁忙，请稍候再试');
-            },
-            500: function () {
-                console.log('E500 - 服务器繁忙，请稍候再试');
-            }
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            console.log( 'E' + textStatus + ' - 服务器繁忙，请稍候再试');
-        },
-        success: function (res) {
-            $('#technologyTeam').text(res.team.technology);
-            $('#lsyEmail').text(res.email.lsyFoxmail);
-            $('#telAfterPreSale').text(res.telephone.afterSale);
-            $('#telComplaint').text(res.telephone.complaint);
-            $('#website').html('<a target="_blank" href="'+res.website+'">'+res.website+'</a>');
-            $('#address').text(res.address);
-        }
-    });
+
 </script>
 {/block}

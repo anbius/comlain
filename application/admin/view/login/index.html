@@ -5,7 +5,7 @@
     <div class="header notselect layui-hide-xs">
         <a href="{:url('@')}" class="title">{:sysconf('app_name')} <span class="padding-left-5 font-s10">{:sysconf('app_version')}</span></a>
         <ul>
-            <li><a href="javascript:void(0)" onclick="lsyHelp()">帮助</a></li>
+            <li><a href="javascript:void(0)">帮助</a></li>
             <li><a target="_blank" href="https://pc.qq.com/category/c3.html">推荐使用谷歌浏览器</a></li>
         </ul>
     </div>
@@ -46,48 +46,6 @@
 {block name='script'}
 <script src="__ROOT__/static/plugs/supersized/supersized.3.2.7.min.js"></script>
 <script type="text/javascript" charset="utf-8">
-function lsyHelp(){
-    var htmls = '<table class="layui-table" lay-even lay-skin="line"><colgroup><col width="20%"><col width="30%"><col width="20%"><col width="30%"></colgroup>';
-    htmls += '<tr><td class="nowrap">技术团队</td> <td class="nowrap" id="technologyTeam"></td></tr>';
-    htmls += '<tr><td class="nowrap">联系邮箱</td> <td class="nowrap" id="lsyEmail"></td></tr>';
-    htmls += '<tr><td class="nowrap">售后电话</td> <td class="nowrap" id="telAfterPreSale"></td></tr>';
-    htmls += '<tr><td class="nowrap">投诉反馈</td> <td class="nowrap" id="telComplaint"></td></tr>';
-    htmls += '<tr><td class="nowrap">公司官网</td> <td class="nowrap" id="website"></td></tr>';
-    htmls += '<tr><td class="nowrap">公司地址</td> <td class="nowrap" id="address"></td></tr>';
-    htmls += '</table>';
 
-    layer.open({
-        type: 1,
-        skin: 'layui-layer-rim', //加上边框
-        area: ['450px', '290px'], //宽高
-        content: htmls
-    });
-
-    $.ajax({
-        type: 'GET',
-        dataType: 'jsonp',
-        jsonpCallback: 'showLsyInfo',
-        url: 'https://www.longshangyun.com/lsyInfo.json',
-        statusCode: {
-            404: function () {
-                console.log('E404 - 服务器繁忙，请稍候再试');
-            },
-            500: function () {
-                console.log('E500 - 服务器繁忙，请稍候再试');
-            }
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            console.log( 'E' + textStatus + ' - 服务器繁忙，请稍候再试');
-        },
-        success: function (res) {
-            $('#technologyTeam').text(res.team.technology);
-            $('#lsyEmail').text(res.email.lsyFoxmail);
-            $('#telAfterPreSale').text(res.telephone.afterSale);
-            $('#telComplaint').text(res.telephone.complaint);
-            $('#website').html('<a target="_blank" href="'+res.website+'">'+res.website+'</a>');
-            $('#address').text(res.address);
-        }
-    });
-}
 </script>
 {/block}
