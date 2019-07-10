@@ -67,7 +67,7 @@ class ComplainInfo extends Controller
      * 处理 头数接口 是否受理  是否 重大
      */
     public function dealComplainStatusbyId(){
-        $data = $this->request->post;
+        $data = $this->request->post();
         $updataId = $data['id'];
         $updata['is_accept'] = $data['is_accept'];
         $updata['complainSource']   = $data['complainSource'];
@@ -111,7 +111,7 @@ class ComplainInfo extends Controller
      * */
     public function getAllComplainInfobyId()
     {
-        $data = $this->request->get;
+        $data = $this->request->get();
       //  $data['id'] = 5;
         $where['id']        = $data['id'];
         $where['is_delete'] = 0;

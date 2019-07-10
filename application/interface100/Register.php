@@ -27,30 +27,19 @@ class Register extends Controller
      * */
     public function Register()
     {
-        $result = 1;
-        $return = ['code'=>200,'message'=>'成功','res'=>$result];
 
-        echo '<pre>';
-print_r($return);
-print_r(json_encode($return));
-die;
-        $file = request();
-        echo '<pre>';
-        print_r($file);
-        die;
-        //todo 密码加密 验证 是否重复  密码MD5一下
+        $dataRegister = $this->request->post();
         //普通投诉用户注册 默认字段
         //ip/index/app.html?edition=1.0.0&interface=Banner&api=lists
-        $data = request()->post();
-        $data = [
-            'userName'=>'sniper',
-            'password'=>'sniper',
-            'mobile'=>'15853197991'
-        ];
-        $where['userName'] = $userName;
-        $insertData['userName'] = $data['userName'];
-        $insertData['password'] = md5($data['password']);
-        $insertData['mobile']   = $data['mobile'];
+//        $data = [
+//            'userName'=>'sniper',
+//            'password'=>'sniper',
+//            'mobile'=>'15853197991'
+//        ];
+        $where['userName']      = $dataRegister['userName'];
+        $insertData['userName'] = $dataRegister['userName'];
+        $insertData['password'] = md5($dataRegister['password']);
+        $insertData['mobile']   = $dataRegister['mobile'];
         /*检查唯一性 用户名注册*/
         $judge = Db::name('register_user')->where($where)->find();
         if($judge){

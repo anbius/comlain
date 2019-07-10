@@ -26,7 +26,7 @@ class DepartViewInfo extends Controller
     public function getViewInfo()
     {
         $data = $this->request->get();
-        $data['belongId'] = 5;
+      //  $data['belongId'] = 5;
         $where['belongId'] = $data['belongId'];
         $viewInfo = Db::name('belong_detail')->field('content')->where($where)->find();
         $code     = 200;
